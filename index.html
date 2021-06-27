@@ -31,30 +31,37 @@
 </head>
 
 <body>
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
 
-  <div class="pure-g">
+  <div id="marble_league_container"></div>
+
+  <!-- <div class="pure-g">
       <div class="pure-u-1-4"><p>Fourths</p></div>
       <div class="pure-u-1-4"><p>Fourths</p></div>
       <div class="pure-u-1-4"><p>Fourths</p></div>
       <div class="pure-u-1-4"><p>Fourths</p></div>
-  </div>
+  </div> -->
 
   <button class="pure-button pure-button-primary">A Primary Button</button>
 
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <button class="pure-button pure-button-primary" onClick="signOut">Sign out</button>
+  <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <button class="pure-button pure-button-primary" onClick="signOut">Sign out</button> -->
+
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
+  <!-- <script>
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
   </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script> -->
 
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Load our React component. -->
+  <script src="js/react/marble_league.js"></script>
 
 </body>
 
