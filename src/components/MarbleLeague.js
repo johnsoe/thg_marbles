@@ -16,7 +16,7 @@ class MarbleLeague extends React.Component {
           {
             this.props.teams
             .map(item =>
-              <li>
+              <li key={item.name}>
                 <MarbleLeagueItem team={item}/>
               </li>
             )
