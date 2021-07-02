@@ -1,0 +1,49 @@
+
+ul {
+  list-style-type: none;
+}
+
+.Team-Icon {
+  display: block;
+  max-width: 65px;
+  width: auto;
+  height: auto;
+  float: left;
+}
+
+.ML-Container {
+  background-color: white;
+  width: 33%;
+  margin: 24px;
+  border-radius: 8px;
+}
+
+.
+
+ul {
+  padding: 6px 12px 6px 12px;
+}
+
+.League-List-Container li {
+  overflow: hidden;
+  margin: 12px;
+  padding: 4px;
+}
+
+.Team-Name {
+  font-size: calc(10px + 2vmin);
+}
+
+.ML-Hashtag {
+  font-size: calc(2px + 2vmin);
+}
+
+.Team-Text {
+  padding: 0px;
+  margin: 0 0 0 12px;
+}
+
+.League-Team-Container {
+  display: flex;
+  align-items: center;
+}
