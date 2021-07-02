@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fantasymarbleleague-staging-214141-authRole",
+      "UnauthRoleArn": "arn:aws:iam::668124502863:role/amplify-fantasymarbleleague-staging-214141-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::668124502863:role/amplify-fantasymarbleleague-staging-214141-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-fantasymarbleleague-staging-214141-deployment",
+      "UnauthRoleName": "amplify-fantasymarbleleague-staging-214141-unauthRole",
+      "StackName": "amplify-fantasymarbleleague-staging-214141",
+      "StackId": "arn:aws:cloudformation:us-west-2:668124502863:stack/amplify-fantasymarbleleague-staging-214141/4bc17e20-d6c7-11eb-bb3c-0ab94e84fdab",
+      "AmplifyAppId": "d23vnwzz35xnmo"
+    },
+    "categories": {
+      "auth": {
+        "FantasyMarbleLeague": {}
+      }
+    }
+  }
+}
