@@ -14,11 +14,14 @@
 }
 
 .Top-ML-Container {
-  background-color: #f4f4f4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin)
+}
+
+.App-Header {
+  background-color: #f4f4f4;
 }
 
 .App-link {

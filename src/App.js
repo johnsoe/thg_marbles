@@ -4,12 +4,17 @@ import React from 'react'
 import MarbleLeague from './components/MarbleLeague'
 import axios from 'axios'
 
+import Amplify, { Auth, Hub } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
+
+Amplify.configure(awsconfig);
 
 class App extends React.Component {
 
   constructor() {
     super();
-    this.state = { teams: null };
+    this.state = { teams: null, user: null }
   }
 
   componentDidMount() {
@@ -23,33 +28,49 @@ class App extends React.Component {
         })
       })
       .catch(err => console.log(err));
+
+    Auth.currentAuthenticatedUser()
+      .then(user => this.setState({ user }))
+      .catch(() => console.log("Not signed in"));
+
+    Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          this.setState({ user: data });
+          break;
+        case "signOut":
+          this.setState({ user: null });
+          break;
+      }
+    });
+  }
+
+  onSignOut() {
+    Auth.signOut();
+  }
+
+  onSignIn() {
+    Auth.federatedSignIn({provider: 'Google'});
   }
 
   render() {
     return (
-      <div className="Top-ML-Container">
-          { this.state.teams &&
-            <MarbleLeague teams={
-              this.state.teams.filter(item => item.ml_team)
-            } />
-          }
+      <div className="App-Header">
+        { this.state.user ? (
+          <button onClick={this.onSignOut}>Sign Out</button>
+        ) : (
+          <button onClick={this.onSignIn}>Sign In With Google</button>
+        )}
+        <div className="Top-ML-Container">
+            { this.state.teams &&
+              <MarbleLeague teams={
+                this.state.teams.filter(item => item.ml_team)
+              } />
+            }
+        </div>
       </div>
     );
   }
 }
-// <header className="App-header">
-//   <img src={logo} className="App-logo" alt="logo" />
-//   <p>
-//     Edit <code>src/App.js</code> and save to reload.
-//   </p>
-//   <a
-//     className="App-link"
-//     href="https://reactjs.org"
-//     target="_blank"
-//     rel="noopener noreferrer"
-//   >
-//     Learn React
-//   </a>
-// </header>
 
 export default App;
