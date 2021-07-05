@@ -2,11 +2,11 @@ import './App.css';
 
 import React from 'react'
 import MarbleLeague from './components/MarbleLeague'
-import axios from 'axios'
+import TeamCreateView from './components/TeamCreateView'
+import BaseApi from './api/Base'
 
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsConfig from './aws-exports';
-import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
@@ -23,7 +23,6 @@ const [
   localRedirectSignIn,
   productionRedirectSignIn,
 ] = awsConfig.oauth.redirectSignIn.split(",");
-
 const [
   localRedirectSignOut,
   productionRedirectSignOut,
@@ -47,19 +46,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get("https://lsgs3tdrt3.execute-api.us-west-2.amazonaws.com/dev", {
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(res => {
-        //console.log(res.data)
-        this.setState({
-          teams : res.data.body
-        })
-      })
-      .catch(err => console.log(err));
-
+    this.queryForLeagueData();
     Auth.currentAuthenticatedUser()
-      .then(user => this.setState({ user }))
+      .then(user => {
+        console.log(user);
+        this.setState({ user: user });
+      })
       .catch(() => console.log("Not signed in"));
 
     Hub.listen("auth", ({ payload: { event, data } }) => {
@@ -74,12 +66,28 @@ class App extends React.Component {
     });
   }
 
+  queryForLeagueData() {
+    BaseApi.queryForLeagueData(res => {
+      console.log("resetting state");
+      console.log(this);
+      this.setState({teams : res.data.body});
+    });
+  }
+
   onSignOut() {
     Auth.signOut();
   }
 
   onSignIn() {
     Auth.federatedSignIn({provider: 'Google'});
+  }
+
+  getFilteredMarbleTeamList() {
+    return this.state.teams && this.state.teams.filter(item => item.ml_team)
+  }
+
+  getFilteredUserTeamList() {
+    return this.state.teams && this.state.teams.filter(item => item.ml_team == false)
   }
 
   render() {
@@ -90,11 +98,17 @@ class App extends React.Component {
         ) : (
           <button onClick={this.onSignIn}>Sign In With Google</button>
         )}
+        { this.state.user && this.state.teams &&
+          <TeamCreateView
+            auth={this.state.user}
+            mLTeams={this.getFilteredMarbleTeamList()}
+            userTeams={this.getFilteredUserTeamList()}
+            onTeamAdded={this.queryForLeagueData.bind(this)}
+          />
+        }
         <div className="Top-ML-Container">
             { this.state.teams &&
-              <MarbleLeague teams={
-                this.state.teams.filter(item => item.ml_team)
-              } />
+              <MarbleLeague teams={this.getFilteredMarbleTeamList()} />
             }
         </div>
       </div>
