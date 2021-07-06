@@ -19,7 +19,7 @@ const UserLeague = (props) => {
 
   return(
     <div>
-      { upcomingEvents.length > 0 &&
+      { upcomingEvents.length > 0 && props.auth && 
         <ul>
           {
             upcomingEvents.map(item =>

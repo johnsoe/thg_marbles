@@ -66,6 +66,7 @@ class App extends React.Component {
     Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
         case "signIn":
+        // TODO: This data structure might not be the same and is resulting in an error.
           this.setState({ user: data });
           break;
         case "signOut":
