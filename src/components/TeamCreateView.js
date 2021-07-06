@@ -1,25 +1,31 @@
 import './Components.css'
 
-import React from 'react'
-import ReactModal from 'react-modal'
-import UserTeamModel from '..'
-import axios from 'axios'
+import React, { useState } from 'react';
+import ReactModal from 'react-modal';
+import axios from 'axios';
+import { useAlert } from 'react-alert';
+import BaseApi from '../api/Base';
 
-class TeamCreateView extends React.Component {
+const TeamCreateView = (props) => {
 
-  constructor(props) {
-    super();
-    this.state = {
-      isOpen: false,
-      selectedTeam: "",
-      teamName: ""
-    };
-  }
+  const alert = useAlert();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const [teamName, setTeamName] = useState("");
+  const [selectedVotingStyle, setSelectedVotingStyle] = useState("");
+  const [userSuggestions, setUserSuggestions] = useState("");
+  const [orangerSubmitCheck, setOrangerSubmitCheck] = useState(false);
 
-  postTeamCreate(auth) {
+  function postTeamCreate(auth) {
+    if (!teamName || !selectedTeam) {
+      console.log("You need to enter shit");
+      return;
+    }
     axios.post("https://lsgs3tdrt3.execute-api.us-west-2.amazonaws.com/dev", {
-      "teamName": this.state.teamName,
-      "selectedTeam": this.state.selectedTeam
+      "teamName": teamName,
+      "selectedTeam": selectedTeam,
+      "userSuggestions": userSuggestions,
+      "selectedVotingStyle": selectedVotingStyle
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -27,71 +33,88 @@ class TeamCreateView extends React.Component {
       }
     })
       .then( data => {
-        console.log("DATA: " + JSON.stringify(data))
-        this.setState({ isOpen: false })
-        this.props.onTeamAdded();
+        console.log("TEAM: " + JSON.stringify(data))
+        setIsOpen(false);
+        props.onTeamAdded();
       })
-      .catch(err => console.log("ERROR: " + err));
+      .catch(err => {
+        console.log("ERROR: " + err);
+      })
   }
 
-  showTeamModal() {
-    this.setState({ isOpen: true });
+  function handleChange(e) {
+    var selection = e.target.value;
+    console.log("TEAM: " + selection);
+    if (selection === "O'rangers" && orangerSubmitCheck === false) {
+      alert.info("Are you sure you want to pick The O'rangers? It's not too late to pick a better team.");
+      setOrangerSubmitCheck(true);
+    }
+    setSelectedTeam(selection);
   }
 
-  handleChange(e) {
-    this.setState({ selectedTeam : e.target.value });
+  function handleTeamNameChange(e) {
+    setTeamName(e.target.value);
   }
 
-  handleTeamNameChange(e) {
-    this.setState({ teamName : e.target.value });
+  function handleVotingStyleChange(e) {
+    setSelectedVotingStyle(e.target.value);
   }
 
-  getCurrentUserId() {
-    return this.props.auth['attributes']['sub']
+  function handleSuggestionBoxChanges(e) {
+    setUserSuggestions(e.target.value);
   }
 
-  isUserIdInUserTeamList() {
-    return this.props.userTeams.some(item => {
-      return item.id == this.getCurrentUserId();
+  function isUserIdInUserTeamList() {
+    return props.userTeams.some(item => {
+      return item.id == BaseApi.getCurrentUserId(props.auth);
     });
   }
 
-  render() {
-    var userAlreadyJoined = this.isUserIdInUserTeamList();
-    return (
-      <div>
-        { !userAlreadyJoined &&
-          <div>
-            <button onClick={() => this.showTeamModal()}>Join The League</button>
-            <ReactModal
-              isOpen={this.state.isOpen}
-              ariaHideApp={false}
+  var userAlreadyJoined = isUserIdInUserTeamList();
+  return (
+    <div>
+      { !userAlreadyJoined &&
+        <div>
+          <button onClick={() => setIsOpen(true)}>Join The League</button>
+          <ReactModal
+            isOpen={isOpen}
+            ariaHideApp={false}
+          >
+            <h3>Join the League!</h3>
+            <p>Your team name</p>
+            <input type="text" name="name" onChange={(e) => handleTeamNameChange(e)} />
+            <p>Please select one team to be your favorite. Every time your favorite team places top 3, you earn a raffle ticket. At the end of the league, we will draw raffle tickets for prizes.</p>
+            <select
+              value={selectedTeam}
+              onChange={(e) => handleChange(e)}
+              label="Favorite team:"
             >
-              <h3>Join the League!</h3>
-              <label>
-                Your team name:
-                <input type="text" name="name" onChange={(e) => this.handleTeamNameChange(e)} />
-              </label>
-              <p>Please select one team to be your favorite. Every time your favorite team places top 3, you earn a raffle ticket. At the end of the league, we will draw raffle tickets for prizes.</p>
-              <select
-                value={this.state.selectedTeam}
-                onChange={(e) => this.handleChange(e)}
-                label="Favorite team:"
-              >
-                <option value=""></option>
-                {
-                  this.props.mLTeams.map(item =>
-                    <option value={item.name}>{item.name}</option>
-                  )
-                }
-              </select>
-              <button onClick={() => this.postTeamCreate(this.props.auth)}>Submit</button>
-            </ReactModal>
-          </div>
-        }
-      </div>
-    )
-  }
+              <option value=""></option>
+              {
+                props.mLTeams.map(item =>
+                  <option value={item.name}>{item.name}</option>
+                )
+              }
+            </select>
+            <p>Every week you will select one team you believe will do the best. Please select your preferred rules for which team you can vote for.</p>
+            <select
+              value={selectedVotingStyle}
+              onChange={(e) => handleVotingStyleChange(e)}
+            >
+              <option value=""></option>
+              <option value="unique">You can vote for a team only once.</option>
+              <option value="two_per">You can vote for a team up to two times.</option>
+              <option value="limited_dupes">You get a total of four duplicate votes that can be used on any team. All other votes must be unique.</option>
+              <option value="draft">Let's do a draft! Each team picks five marbles from the league roster in snake style draft.</option>
+            </select>
+            <p>Please add any suggestions you have for the league in the input below. You can suggest a different voting scheme, or side bets that you might find interesting. I promise I'll read it as long as the suggestion comes from someone that didn't pick O'rangers as their favorite team.</p>
+            <textarea rows="4" cols="65" onChange={(e) => handleSuggestionBoxChanges(e)}/>
+            <button onClick={() => postTeamCreate(props.auth)}>Submit</button>
+          </ReactModal>
+        </div>
+      }
+    </div>
+  )
 }
 
 export default TeamCreateView;
