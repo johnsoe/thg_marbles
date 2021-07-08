@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import BaseApi from '../api/Base';
 import axios from 'axios'
+import { GrClose } from "react-icons/gr"
 
 const WagerAlert = (props) => {
 
@@ -48,6 +49,10 @@ const WagerAlert = (props) => {
       .toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: 'numeric'});
   }
 
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div>
       <div onClick={() => setIsOpen(true)}>
@@ -60,8 +65,11 @@ const WagerAlert = (props) => {
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={true}
       >
         <h3>Wager on Upcoming Event: {props.mLEvent.name}</h3>
+        <GrClose onClick={closeModal}/>
         <p>Select the team you believe will perform the best. You will earn the same number of points the selected team earns in this event.</p>
         <select
           value={userVote && userVote[0] ? (userVote[0]) : ""}

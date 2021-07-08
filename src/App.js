@@ -58,17 +58,12 @@ class App extends React.Component {
     this.queryForLeagueData();
     Auth.currentAuthenticatedUser()
       .then(user => {
-        console.log(user);
         this.setState({ user: user });
       })
       .catch(() => console.log("Not signed in"));
 
     Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
-        case "signIn":
-        // TODO: This data structure might not be the same and is resulting in an error.
-          this.setState({ user: data });
-          break;
         case "signOut":
           this.setState({ user: null });
           break;
@@ -78,8 +73,6 @@ class App extends React.Component {
 
   queryForLeagueData() {
     BaseApi.queryForLeagueData(res => {
-      console.log("resetting state");
-      console.log(this);
       this.setState({teams : res.data.body});
     });
   }
@@ -115,7 +108,7 @@ class App extends React.Component {
         ) : (
           <button onClick={this.onSignIn}>Sign In With Google</button>
         )}
-        { this.state.user && marbleTeams && userTeams && userTeams.length < 16 &&
+        { this.state.user && marbleTeams && userTeams && !BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) && userTeams.length < 16 &&
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <TeamCreateView
               auth={this.state.user}

@@ -1,6 +1,7 @@
 
 import UserTeamItem from './UserTeamItem'
 import WagerAlert from './WagerAlert'
+import BaseApi from '../api/Base'
 
 import axios from 'axios';
 
@@ -8,7 +9,6 @@ const UserLeague = (props) => {
 
   function getUpcomingEvents() {
     const now = Date.now();
-    console.log(now / 1000);
     return props.events.filter(item => {
         return now / 1000 <= item.expiry;
     })
@@ -19,7 +19,7 @@ const UserLeague = (props) => {
 
   return(
     <div>
-      { upcomingEvents.length > 0 && props.auth && 
+      { upcomingEvents.length > 0 && props.auth && BaseApi.isUserIdInUserTeamList(props.userTeams, props.auth) &&
         <ul>
           {
             upcomingEvents.map(item =>
@@ -32,11 +32,13 @@ const UserLeague = (props) => {
       }
       <ul>
         {
-          props.userTeams.map(item =>
-            <li key={item.name}>
-              <UserTeamItem team={item}/>
-            </li>
-          )
+          props.userTeams
+            .sort(item => item.total)
+            .map((item, index) =>
+              <li key={item.name}>
+                <UserTeamItem team={item}/>
+                </li>
+            )
         }
       </ul>
     </div>

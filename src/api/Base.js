@@ -20,6 +20,12 @@ class BaseApi {
   static getAuthToken(auth) {
     return auth['signInUserSession']['accessToken']['jwtToken'];
   }
+
+  static isUserIdInUserTeamList(userTeams, auth) {
+    return userTeams.some(item => {
+      return item.id == BaseApi.getCurrentUserId(auth);
+    });
+  }
 }
 
 export default BaseApi;
