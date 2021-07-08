@@ -13,34 +13,39 @@ ul {
 
 .ML-Container {
   background-color: white;
-  margin: 24px;
   border-radius: 8px;
+  padding: 8px;
+  margin-right: 16px;
 }
 
-ul {
-  padding: 6px 12px 6px 12px;
-}
-
-.League-List-Container li {
+li {
   overflow: hidden;
   margin: 12px;
-  padding: 4px;
 }
 
 .Team-Name {
-  font-size: calc(10px + 2vmin);
+  font-size: 24px;
+}
+
+p {
+  padding: 0px;
+  margin: 0px;
 }
 
 .ML-Hashtag {
-  font-size: calc(2px + 2vmin);
+  font-size: 16px;
 }
 
 .Team-Text {
-  padding: 0px;
   margin: 0 0 0 12px;
 }
 
 .League-Team-Container {
   display: flex;
   align-items: center;
+  background-color: white;
+}
+
+.WagerText {
+  font-size: 16px;
 }

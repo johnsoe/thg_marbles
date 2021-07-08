@@ -15,6 +15,7 @@ class MarbleLeague extends React.Component {
         <ul className="League-List-Container">
           {
             this.props.teams
+            .sort((a, b) => b.total - a.total)
             .map(item =>
               <li key={item.name}>
                 <MarbleLeagueItem team={item}/>

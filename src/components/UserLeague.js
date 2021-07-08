@@ -18,13 +18,18 @@ const UserLeague = (props) => {
   const upcomingEvents = getUpcomingEvents();
 
   return(
-    <div>
+    <div className="ML-Container">
       { upcomingEvents.length > 0 && props.auth && BaseApi.isUserIdInUserTeamList(props.userTeams, props.auth) &&
         <ul>
           {
             upcomingEvents.map(item =>
               <li key={item.name}>
-                <WagerAlert mLEvent={item} auth={props.auth} onWagerMade={props.onWagerMade}/>
+                <WagerAlert
+                  mLEvent={item}
+                  auth={props.auth}
+                  onWagerMade={props.onWagerMade}
+                  wagers={props.wagers}
+                />
               </li>
             )
           }
@@ -33,11 +38,11 @@ const UserLeague = (props) => {
       <ul>
         {
           props.userTeams
-            .sort(item => item.total)
+            .sort((a, b) => b.total - a.total)
             .map((item, index) =>
               <li key={item.name}>
                 <UserTeamItem team={item}/>
-                </li>
+              </li>
             )
         }
       </ul>

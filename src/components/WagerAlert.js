@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
 import BaseApi from '../api/Base';
 import axios from 'axios'
@@ -8,26 +8,52 @@ const WagerAlert = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const userId = BaseApi.getCurrentUserId(props.auth);
-  const [userVote, setUserVote] = useState(getUserVote());
+  const [userVote, setUserVote] = useState();
+  const [userSecondaryVote, setUserSecondaryVote] = useState();
+  const [availableTeams, setAvailableTeams] = useState([]);
 
-  function getUserVote() {
-    const wager = props.mLEvent.wagers[userId];
-    return wager ? wager : ["", ""];
-  }
+  useEffect(setWagerForEventId,[])
 
   function handleTeamSelectChange(e) {
-    setUserVote([e.target.value, userVote[1]]);
+    setUserVote(e.target.value);
   }
 
   function handleSecondaryBoxChanges(e) {
-    setUserVote([userVote[0], e.target.value]);
+    setUserSecondaryVote(e.target.value);
+  }
+
+  function setWagerForEventId() {
+    const eventId = props.mLEvent.id;
+    if (props.wagers) {
+      const wager = props.wagers.find(item => item.eventId === eventId);
+      setUserVote(wager.selectedTeam);
+      setUserSecondaryVote(wager.secondary);
+    }
+  }
+
+  function getAvailableTeams() {
+    axios.post(BaseApi.getBaseUrl() + "/Teams",{
+      "eventId": props.mLEvent.id
+    },{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': BaseApi.getAuthToken(props.auth)
+      }
+    })
+    .then( data => {
+      console.log("AvailableTeams: " + JSON.stringify(data));
+      setAvailableTeams(data);
+    })
+    .catch(err => {
+      console.log("ERROR: " + err);
+    })
   }
 
   function makeWager() {
     axios.put(BaseApi.getBaseUrl() + "/Events", {
       "eventId": props.mLEvent.id,
-      "selectedTeam": userVote[0],
-      "secondary": userVote[1],
+      "selectedTeam": userVote,
+      "secondary": userSecondaryVote,
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +62,7 @@ const WagerAlert = (props) => {
     })
     .then( data => {
       console.log("WAGER: " + JSON.stringify(data));
-      setIsOpen(false);
+      closeModal();
       props.onWagerMade();
     })
     .catch(err => {
@@ -53,15 +79,21 @@ const WagerAlert = (props) => {
     setIsOpen(false);
   }
 
+  function openModal() {
+    getAvailableTeams();
+    setIsOpen(true);
+  }
+
   return (
     <div>
-      <div onClick={() => setIsOpen(true)}>
-        { userVote[0] ? (
-          <p>You have already voted for {props.mLEvent.name}, but can update your vote by clicking here.</p>
+      <div className="WagerText">
+        { userVote ? (
+          <p>You have already voted for {props.mLEvent.name}, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
         ) : (
-          <p>You have an upcoming event: {props.mLEvent.name}. Please cast your vote before noon on {getDateTimeFromEpoch()}</p>
+          <p>Upcoming event: {props.mLEvent.name}. Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
         )}
       </div>
+      <button onClick={openModal}>Vote</button>
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}
@@ -72,15 +104,16 @@ const WagerAlert = (props) => {
         <GrClose onClick={closeModal}/>
         <p>Select the team you believe will perform the best. You will earn the same number of points the selected team earns in this event.</p>
         <select
-          value={userVote && userVote[0] ? (userVote[0]) : ""}
+          value={userVote}
           onChange={(e) => handleTeamSelectChange(e)}
         >
+          <option value=""></option>
           <option value="Savage Speeders">Savage Speeders</option>
           <option value="O'rangers">O'rangers</option>
         </select>
         <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
         <p>{props.mLEvent.secondary_wager}</p>
-        <textarea value={userVote[1]} rows="4" cols="65" onChange={(e) => handleSecondaryBoxChanges(e)}/>
+        <textarea value={userSecondaryVote} rows="4" cols="65" onChange={(e) => handleSecondaryBoxChanges(e)}/>
         <button onClick={() => makeWager()}>Submit</button>
       </ReactModal>
     </div>

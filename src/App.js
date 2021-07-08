@@ -51,7 +51,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = { teams: null, user: null }
+    this.state = { league: null, user: null }
   }
 
   componentDidMount() {
@@ -73,7 +73,7 @@ class App extends React.Component {
 
   queryForLeagueData() {
     BaseApi.queryForLeagueData(res => {
-      this.setState({teams : res.data.body});
+      this.setState({league : res.data.body});
     });
   }
 
@@ -86,21 +86,31 @@ class App extends React.Component {
   }
 
   getFilteredMarbleTeamList() {
-    return this.state.teams && this.state.teams.filter(item => item.record_type === "LeagueTeam")
+    return this.state.league && this.state.league.filter(item => item.record_type === "LeagueTeam")
   }
 
   getFilteredUserTeamList() {
-    return this.state.teams && this.state.teams.filter(item => item.record_type === "UserTeam")
+    return this.state.league && this.state.league.filter(item => item.record_type === "UserTeam")
   }
 
   getFilteredEvents() {
-    return this.state.teams && this.state.teams.filter(item => item.record_type === "Event")
+    return this.state.league && this.state.league.filter(item => item.record_type === "Event")
+  }
+
+  getUserSpecificWagers() {
+    return this.state.league &&
+      this.state.user &&
+      this.state.league.filter(
+        item => item.record_type === "Wager" &&
+        BaseApi.getCurrentUserId(this.state.user) === item.userId
+      )
   }
 
   render() {
     const userTeams = this.getFilteredUserTeamList();
     const marbleTeams = this.getFilteredMarbleTeamList();
     const allEvents = this.getFilteredEvents();
+    const userWagers = this.getUserSpecificWagers();
     return (
       <div className="App-Header">
         { this.state.user ? (
@@ -125,12 +135,13 @@ class App extends React.Component {
               }
           </div>
           <div className="Top-ML-Container pure-u-1 pure-u-md-3-5">
-              { userTeams && this.state.teams &&
+              { userTeams && this.state.league &&
                 <UserLeague
                   auth={this.state.user}
                   userTeams={userTeams}
                   mlTeams={marbleTeams}
                   events={allEvents}
+                  wagers={userWagers}
                   onWagerMade={this.queryForLeagueData.bind(this)}
                 />
               }
