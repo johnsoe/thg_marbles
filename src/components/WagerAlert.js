@@ -26,8 +26,10 @@ const WagerAlert = (props) => {
     const eventId = props.mLEvent.id;
     if (props.wagers) {
       const wager = props.wagers.find(item => item.eventId === eventId);
-      setUserVote(wager.selectedTeam);
-      setUserSecondaryVote(wager.secondary);
+      if (wager) {
+        setUserVote(wager.selectedTeam);
+        setUserSecondaryVote(wager.secondary);
+      }
     }
   }
 
