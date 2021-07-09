@@ -15,7 +15,13 @@ ul {
   background-color: white;
   border-radius: 8px;
   padding: 8px;
-  margin-right: 16px;
+  margin-right: 8px;
+  margin-left: 4px;
+}
+
+.UL-Container {
+  margin-right: 4px;
+  margin-left: 8px;
 }
 
 li {
@@ -32,20 +38,114 @@ p {
   margin: 0px;
 }
 
-.ML-Hashtag {
+.Team-Subtext {
   font-size: 16px;
+  margin: 0 0 0 12px;
 }
 
 .Team-Text {
+  font-size: 24px;
   margin: 0 0 0 12px;
+}
+
+.Place-Text {
+  font-size: 32px;
+  padding: 4px;
+}
+
+.Place-Superscript {
+  vertical-align: super;
+  font-size: 18px;
 }
 
 .League-Team-Container {
   display: flex;
   align-items: center;
   background-color: white;
+  border-radius: 4px;
+  padding: 6px;
 }
 
-.WagerText {
+.League-Team-Container-Hover:hover {
+  background-color: #dcdcdc;
+  cursor: default;
+  transition: .15s ease;
+}
+
+.Wager-Text {
   font-size: 16px;
+  padding: 2px;
+}
+
+.Wager-Container {
+  padding: 8px;
+  background: #dcdcdc;
+  border-radius: 4px;
+  float: right;
+}
+
+.Wager-Container button {
+  float: right;
+}
+
+.Place-Container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+.Place-Gold {
+  border-radius: 4px;
+  border: 2px solid #FFD700;
+  background-color: #FFD700;
+}
+
+.Place-Silver {
+  border-radius: 4px;
+  border: 2px solid #BEC2CB;
+  background-color: #BEC2CB;
+}
+
+.Place-Bronze {
+  border-radius: 4px;
+  border: 2px solid #A97142;
+  background-color: #A97142;
+}
+
+.Icon-Container {
+  float: right;
+  padding: 8px;
+  border-radius: 16px;
+  line-height: 0px;
+}
+
+.Icon-Container:hover{
+  background-color: #dcdcdc;
+  transition: 0.15s ease;
+}
+
+.ReactModal__Content p {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.ReactModal__Content select {
+  margin-bottom: 12px;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+.ReactModal__Content input {
+  margin-bottom: 12px;
+  width: 200px;
+  text-overflow: ellipsis;
+}
+
+.Performance-Col {
+  padding: 4px 4px 4px 10px;
+}
+
+h4 {
+  margin-bottom: 8px;
 }

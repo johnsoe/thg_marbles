@@ -21,6 +21,10 @@ class BaseApi {
     return auth['signInUserSession']['accessToken']['jwtToken'];
   }
 
+  static getUserEmail(auth) {
+    return auth['attributes']['email'];
+  }
+
   static isUserIdInUserTeamList(userTeams, auth) {
     return userTeams.some(item => {
       return item.id == BaseApi.getCurrentUserId(auth);

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAlert } from 'react-alert';
 import BaseApi from '../api/Base';
 import { GrClose } from "react-icons/gr";
+import { customStyles } from '../util/ModalUtil';
 
 const TeamCreateView = (props) => {
 
@@ -81,9 +82,10 @@ const TeamCreateView = (props) => {
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
+        style={customStyles}
       >
+        <span className="Icon-Container" onClick={closeModal}><GrClose/></span>
         <h3>Join the League!</h3>
-        <GrClose onClick={closeModal}/>
         <p>Your team name</p>
         <input type="text" name="name" onChange={(e) => handleTeamNameChange(e)} />
         <p>Please select one team to be your favorite. Every time your favorite team places top 3, you earn a raffle ticket. At the end of the league, we will draw raffle tickets for prizes.</p>

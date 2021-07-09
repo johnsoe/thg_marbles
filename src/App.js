@@ -4,12 +4,14 @@ import React from 'react'
 import MarbleLeague from './components/MarbleLeague'
 import TeamCreateView from './components/TeamCreateView'
 import UserLeague from './components/UserLeague'
+import UserView from './components/UserView'
 import BaseApi from './api/Base'
 
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsConfig from './aws-exports';
-import { positions, Provider as AlertProvider } from 'react-alert'
+import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
+import { alertOptions } from './util/ModalUtil';
 
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
@@ -40,12 +42,6 @@ const updatedAwsConfig = {
   }
 }
 Amplify.configure(updatedAwsConfig);
-
-const alertOptions = {
-    position: positions.TOP_CENTER,
-    timeout: 5000,
-    offset: '30px'
-};
 
 class App extends React.Component {
 
@@ -94,30 +90,36 @@ class App extends React.Component {
   }
 
   getFilteredEvents() {
-    return this.state.league && this.state.league.filter(item => item.record_type === "Event")
+    return this.state.league &&
+      this.state.league.filter(item => item.record_type === "Event")
   }
 
   getUserSpecificWagers() {
-    return this.state.league &&
-      this.state.user &&
-      this.state.league.filter(
-        item => item.record_type === "Wager" &&
+    var allWagers = this.getAllWagers();
+    return allWagers && this.state.user &&
+      allWagers.filter(item =>
         BaseApi.getCurrentUserId(this.state.user) === item.userId
-      )
+      );
+  }
+
+  getAllWagers() {
+    return this.state.league && this.state.league.filter(item =>
+      item.record_type === 'Wager'
+    );
   }
 
   render() {
     const userTeams = this.getFilteredUserTeamList();
     const marbleTeams = this.getFilteredMarbleTeamList();
     const allEvents = this.getFilteredEvents();
+    const allWagers = this.getAllWagers();
     const userWagers = this.getUserSpecificWagers();
     return (
       <div className="App-Header">
-        { this.state.user ? (
-          <button onClick={this.onSignOut}>Sign Out</button>
-        ) : (
-          <button onClick={this.onSignIn}>Sign In With Google</button>
-        )}
+        <UserView
+          user={this.state.user}
+          onSignOut={this.onSignOut}
+          onSignIn={this.onSignIn}/>
         { this.state.user && marbleTeams && userTeams && !BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) && userTeams.length < 16 &&
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <TeamCreateView
@@ -129,17 +131,17 @@ class App extends React.Component {
           </AlertProvider>
         }
         <div className="League-Views">
-          <div className="Top-ML-Container pure-u-1 pure-u-md-2-5">
+          <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
               { marbleTeams &&
-                <MarbleLeague teams={marbleTeams} />
+                <MarbleLeague teams={marbleTeams} wagers={allWagers} events={allEvents} />
               }
           </div>
-          <div className="Top-ML-Container pure-u-1 pure-u-md-3-5">
+          <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
               { userTeams && this.state.league &&
                 <UserLeague
                   auth={this.state.user}
                   userTeams={userTeams}
-                  mlTeams={marbleTeams}
+                  mLTeams={marbleTeams}
                   events={allEvents}
                   wagers={userWagers}
                   onWagerMade={this.queryForLeagueData.bind(this)}

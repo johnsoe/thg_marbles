@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: Helvetica, Arial, Sans-Serif;
 }
 
 .App-logo {
@@ -47,9 +48,9 @@ button {
   border-style: solid;
   font-size: calc(10px + 0.5vmin);
   transition: 0.15s ease;
-  display: inline-block;
   margin-bottom: 2px;
   margin-top: 2px;
+  display: block;
 }
 
 button:hover {

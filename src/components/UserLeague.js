@@ -18,7 +18,7 @@ const UserLeague = (props) => {
   const upcomingEvents = getUpcomingEvents();
 
   return(
-    <div className="ML-Container">
+    <div className="ML-Container UL-Container">
       { upcomingEvents.length > 0 && props.auth && BaseApi.isUserIdInUserTeamList(props.userTeams, props.auth) &&
         <ul>
           {
@@ -41,7 +41,10 @@ const UserLeague = (props) => {
             .sort((a, b) => b.total - a.total)
             .map((item, index) =>
               <li key={item.name}>
-                <UserTeamItem team={item}/>
+                <UserTeamItem
+                  team={item}
+                  mLTeams={props.mLTeams}
+                  place={index + 1}/>
               </li>
             )
         }

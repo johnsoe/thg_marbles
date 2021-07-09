@@ -1,24 +1,47 @@
 
-import React from 'react'
+import { useState } from 'react'
+import ReactModal from 'react-modal';
+import NumberFormat from '../util/NumberFormat';
+import MarbleLeagueHeader from './MarbleLeagueHeader';
+import MarbleTeamPerformance from './MarbleTeamPerformance';
+import { GrClose } from "react-icons/gr";
+import { customStyles } from '../util/ModalUtil';
 
-class MarbleLeagueItem extends React.Component {
+const MarbleLeagueItem = (props) => {
 
-  constructor(props) {
-    super();
+  const [isOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
   }
 
-  render() {
-    console.log(this.props.team);
-    return (
-      <div className="League-Team-Container">
-        <img className="Team-Icon" src={this.props.team.icon_url}/>
-        <div className="Team-Text-Container">
-          <p className="Team-Text Team-Name">{this.props.team.name}</p>
-          <p className="Team-Text ML-Hashtag">{this.props.team.hashtag}</p>
-        </div>
-      </div>
-    )
+  function closeModal() {
+    setIsOpen(false);
   }
+
+  return (
+    <div>
+      <MarbleLeagueHeader
+        team={props.team}
+        place={props.place}
+        onClickCallback={openModal}/>
+
+      <ReactModal
+        isOpen={isOpen}
+        ariaHideApp={false}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={true}
+        style={customStyles}>
+
+        <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
+        <MarbleLeagueHeader
+          team={props.team}
+          place={props.place}/>
+
+        <MarbleTeamPerformance events={props.team.events}/>
+      </ReactModal>
+    </div>
+  )
 }
 
 export default MarbleLeagueItem;

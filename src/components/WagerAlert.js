@@ -3,14 +3,16 @@ import ReactModal from 'react-modal';
 import BaseApi from '../api/Base';
 import axios from 'axios'
 import { GrClose } from "react-icons/gr"
+import { customStyles } from '../util/ModalUtil';
 
 const WagerAlert = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const userId = BaseApi.getCurrentUserId(props.auth);
   const [userVote, setUserVote] = useState();
+  const [submittedVote, setSubmittedVote] = useState();
   const [userSecondaryVote, setUserSecondaryVote] = useState();
-  const [availableTeams, setAvailableTeams] = useState([]);
+  const [availableTeams, setAvailableTeams] = useState();
 
   useEffect(setWagerForEventId,[])
 
@@ -27,6 +29,7 @@ const WagerAlert = (props) => {
     if (props.wagers) {
       const wager = props.wagers.find(item => item.eventId === eventId);
       if (wager) {
+        setSubmittedVote(wager.selectedTeam);
         setUserVote(wager.selectedTeam);
         setUserSecondaryVote(wager.secondary);
       }
@@ -42,9 +45,10 @@ const WagerAlert = (props) => {
         'Authorization': BaseApi.getAuthToken(props.auth)
       }
     })
-    .then( data => {
-      console.log("AvailableTeams: " + JSON.stringify(data));
-      setAvailableTeams(data);
+    .then( res => {
+      console.log("AvailableTeams: " + JSON.stringify(res));
+      console.log("Teams Body: " + res.data.body);
+      setAvailableTeams(res.data.body);
     })
     .catch(err => {
       console.log("ERROR: " + err);
@@ -87,35 +91,39 @@ const WagerAlert = (props) => {
   }
 
   return (
-    <div>
-      <div className="WagerText">
-        { userVote ? (
+    <div className="Wager-Container">
+      <p className="Wager-Text">
+        { submittedVote ? (
           <p>You have already voted for {props.mLEvent.name}, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
         ) : (
           <p>Upcoming event: {props.mLEvent.name}. Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
         )}
-      </div>
+      </p>
       <button onClick={openModal}>Vote</button>
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
+        style={customStyles}
       >
-        <h3>Wager on Upcoming Event: {props.mLEvent.name}</h3>
-        <GrClose onClick={closeModal}/>
+        <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
+        <h3>Upcoming Event: {props.mLEvent.name}</h3>
         <p>Select the team you believe will perform the best. You will earn the same number of points the selected team earns in this event.</p>
         <select
           value={userVote}
           onChange={(e) => handleTeamSelectChange(e)}
         >
           <option value=""></option>
-          <option value="Savage Speeders">Savage Speeders</option>
-          <option value="O'rangers">O'rangers</option>
+          { availableTeams &&
+            availableTeams.map(item =>
+              <option value={item}>{item}</option>
+            )
+          }
         </select>
         <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
-        <p>{props.mLEvent.secondary_wager}</p>
-        <textarea value={userSecondaryVote} rows="4" cols="65" onChange={(e) => handleSecondaryBoxChanges(e)}/>
+        <p className='Secondary-Wager-Title'>{props.mLEvent.secondary_wager}</p>
+        <input type="text" name="secondary" value={userSecondaryVote} onChange={(e) => handleSecondaryBoxChanges(e)} />
         <button onClick={() => makeWager()}>Submit</button>
       </ReactModal>
     </div>
