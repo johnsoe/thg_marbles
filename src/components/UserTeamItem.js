@@ -31,12 +31,16 @@ const UserTeamItem = (props) => {
         style={customStyles}>
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
+
         <div className="League-Team-Container">
           <p className="Team-Text">{props.team.name}</p>
           <PlaceView total={props.team.total} place={props.place}/>
         </div>
-        <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>
-        <UserTeamPerformance events={props.team.results} />
+
+        <div className="User-Team-Details">
+          <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>
+          <UserTeamPerformance events={props.team.results} />
+        </div>
       </ReactModal>
     </div>
   )

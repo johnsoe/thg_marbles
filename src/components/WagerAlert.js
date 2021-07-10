@@ -66,10 +66,10 @@ const WagerAlert = (props) => {
         'Authorization': BaseApi.getAuthToken(props.auth)
       }
     })
-    .then( data => {
-      console.log("WAGER: " + JSON.stringify(data));
+    .then(res => {
       closeModal();
       props.onWagerMade();
+      setSubmittedVote(res.data.body);
     })
     .catch(err => {
       console.log("ERROR: " + err);

@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react'
 import MarbleLeague from './components/MarbleLeague'
 import TeamCreateView from './components/TeamCreateView'
+import LeagueTable from './components/LeagueTable'
 import UserLeague from './components/UserLeague'
 import UserView from './components/UserView'
 import BaseApi from './api/Base'
@@ -132,9 +133,9 @@ class App extends React.Component {
         }
         <div className="League-Views">
           <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
-              { marbleTeams &&
-                <MarbleLeague teams={marbleTeams} wagers={allWagers} events={allEvents} />
-              }
+            { marbleTeams &&
+              <MarbleLeague teams={marbleTeams} wagers={allWagers} events={allEvents} />
+            }
           </div>
           <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
               { userTeams && this.state.league &&
@@ -147,6 +148,9 @@ class App extends React.Component {
                   onWagerMade={this.queryForLeagueData.bind(this)}
                 />
               }
+          </div>
+          <div>
+            <LeagueTable events={allEvents} mLTeams={marbleTeams} userTeams={userTeams}/>
           </div>
         </div>
       </div>

@@ -149,3 +149,11 @@ p {
 h4 {
   margin-bottom: 8px;
 }
+
+h3 {
+  margin: 16px 8px 16px 24px;
+}
+
+.User-Team-Details {
+  padding-left: 6px;
+}
