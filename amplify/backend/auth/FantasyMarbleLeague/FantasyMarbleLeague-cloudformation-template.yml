@@ -157,6 +157,10 @@ Parameters:
   dependsOn:
     Type: CommaDelimitedList
       
+        
+  authProviders:
+    Type: CommaDelimitedList
+      
   hostedUIProviderCreds:
     Type: String
   
@@ -166,10 +170,6 @@ Parameters:
   
             
             
-        
-  authProviders:
-    Type: CommaDelimitedList
-      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   

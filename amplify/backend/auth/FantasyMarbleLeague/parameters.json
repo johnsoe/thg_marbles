@@ -57,6 +57,6 @@
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
     "usernameCaseSensitive": false,
     "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://localhost:3000\",\"https://master.d23vnwzz35xnmo.amplifyapp.com/\"],\"LogoutURLs\":[\"https://localhost:3000\",\"https://master.d23vnwzz35xnmo.amplifyapp.com/\"]}",
-    "authProviders": []
+    "authProviders": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://localhost:3000\",\"https://master.d23vnwzz35xnmo.amplifyapp.com/\",\"https://justonemarbleleague.com/\"],\"LogoutURLs\":[\"https://localhost:3000\",\"https://master.d23vnwzz35xnmo.amplifyapp.com/\",\"https://justonemarbleleague.com/\"]}"
 }
