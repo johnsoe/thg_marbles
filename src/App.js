@@ -152,7 +152,13 @@ class App extends React.Component {
               }
           </div>
           <div>
-            <LeagueTable events={allEvents} mLTeams={marbleTeams} userTeams={userTeams}/>
+            { userTeams && 
+              <LeagueTable
+                events={allEvents}
+                mLTeams={marbleTeams}
+                userTeams={userTeams}
+                auth={this.state.user}/>
+            }
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
+import BaseApi from '../api/Base';
 
 const LeagueTable = (props) => {
 
+  var userTeam = BaseApi.getUserIdInUserTeamList(props.userTeams, props.auth);
 
   return (
     <div>
@@ -9,45 +11,45 @@ const LeagueTable = (props) => {
         <thead>
           <tr>
             <th>Marble Team</th>
-            { props.events &&
-              props.events.map(item =>
-                <th>{item.event_num}</th>
-              )
+            {
+              Array.from(Array(16), (e, i) => {
+                return <th>{i + 1}</th>;
+              })
             }
             <th>Total</th>
           </tr>
         </thead>
         <tbody>
           { props.mLTeams &&
-            props.mLTeams.map(teamItem =>
-              <tr>
+            props.mLTeams.map(teamItem => {
+              const points = teamItem.points ? teamItem.points : 0;
+              const userFav = teamItem.name === userTeam.favorite_ml_team;
+              return (<tr className={userFav ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
-                  teamItem.events.filter(item => item.name)
-                    .map(item =>
-                      <td>{item.points}</td>
-                    )
+                  teamItem.events.map(item =>
+                    <td className={"points-" + points}>{points}</td>
+                  )
                 }
                 <td>{teamItem.total}</td>
-              </tr>
-            )
+              </tr>)
+            })
           }
         </tbody>
         <thead>
           <tr>
-            <th>One of Us</th>
+            <th colSpan="18">One of Us</th>
           </tr>
         </thead>
         <tbody>
           { props.userTeams &&
             props.userTeams.map(teamItem =>
-              <tr>
+              <tr className={teamItem.id === userTeam.id ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
-                  teamItem.results.filter(item => item.name)
-                    .map(item =>
-                      <td>{item.primary + item.secondary}</td>
-                    )
+                  teamItem.results.map(item =>
+                    <td>{item.primary + item.secondary ? item.primary + item.secondary : 0}</td>
+                  )
                 }
                 <td>{teamItem.total}</td>
               </tr>

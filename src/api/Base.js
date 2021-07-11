@@ -30,6 +30,12 @@ class BaseApi {
       return item.id == BaseApi.getCurrentUserId(auth);
     });
   }
+
+  static getUserIdInUserTeamList(userTeams, auth) {
+    return userTeams.find(item => {
+      return item.id == BaseApi.getCurrentUserId(auth);
+    });
+  }
 }
 
 export default BaseApi;
