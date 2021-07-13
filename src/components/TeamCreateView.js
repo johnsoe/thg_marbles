@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useAlert } from 'react-alert';
 import BaseApi from '../api/Base';
 import { GrClose } from "react-icons/gr";
-import { customStyles } from '../util/ModalUtil';
+import { getCustomStyles } from '../util/ModalUtil';
 
 const TeamCreateView = (props) => {
 
@@ -82,7 +82,7 @@ const TeamCreateView = (props) => {
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
-        style={customStyles}
+        style={getCustomStyles()}
       >
         <span className="Icon-Container" onClick={closeModal}><GrClose/></span>
         <h3>Join the League!</h3>
@@ -113,7 +113,7 @@ const TeamCreateView = (props) => {
           <option value="draft">Let's do a draft! Each team picks five marbles from the league roster in snake style draft.</option>
         </select>
         <p>Please add any suggestions you have for the league in the input below. You can suggest a different voting scheme, or side bets that you might find interesting. I promise I'll read it as long as the suggestion comes from someone that didn't pick O'rangers as their favorite team.</p>
-        <textarea rows="4" cols="65" onChange={(e) => handleSuggestionBoxChanges(e)}/>
+        <textarea onChange={(e) => handleSuggestionBoxChanges(e)}/>
         <button onClick={() => postTeamCreate(props.auth)}>Submit</button>
       </ReactModal>
     </div>

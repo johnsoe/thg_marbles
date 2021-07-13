@@ -5,7 +5,7 @@ import NumberFormat from '../util/NumberFormat';
 import MarbleLeagueHeader from './MarbleLeagueHeader';
 import MarbleTeamPerformance from './MarbleTeamPerformance';
 import { GrClose } from "react-icons/gr";
-import { customStyles } from '../util/ModalUtil';
+import { getCustomStyles } from '../util/ModalUtil';
 
 const MarbleLeagueItem = (props) => {
 
@@ -31,7 +31,7 @@ const MarbleLeagueItem = (props) => {
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
-        style={customStyles}>
+        style={getCustomStyles()}>
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <MarbleLeagueHeader

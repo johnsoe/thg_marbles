@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   font-family: Helvetica, Arial, Sans-Serif;
+  font-size: calc(4px + 1vw);
 }
 
 .App-logo {
@@ -22,7 +23,7 @@
 
 .App-Header {
   background-color: #f4f4f4;
-  padding: 16px;
+  padding: 8px;
 }
 
 .App-link {

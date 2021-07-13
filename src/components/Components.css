@@ -5,7 +5,7 @@ ul {
 
 .Team-Icon {
   display: block;
-  max-width: 65px;
+  max-width: calc(25px + 3vw);
   width: auto;
   height: auto;
   float: left;
@@ -14,23 +14,18 @@ ul {
 .ML-Container {
   background-color: white;
   border-radius: 8px;
-  padding: 8px;
-  margin-right: 8px;
-  margin-left: 4px;
+  padding: 4px;
+  margin-right: 4px;
 }
 
 .UL-Container {
-  margin-right: 4px;
-  margin-left: 8px;
+  margin-right: 0px;
+  margin-left: 4px;
 }
 
 li {
   overflow: hidden;
-  margin: 12px;
-}
-
-.Team-Name {
-  font-size: 24px;
+  margin: 6px;
 }
 
 p {
@@ -38,24 +33,29 @@ p {
   margin: 0px;
 }
 
+div {
+  font-size: calc(10px + 0.5vmin);
+}
+
 .Team-Subtext {
-  font-size: 16px;
-  margin: 0 0 0 12px;
+  font-size: calc(7px + .8vw);
+  margin: 0 0 0 6px;
 }
 
 .Team-Text {
-  font-size: 24px;
-  margin: 0 0 0 12px;
+  font-size: calc(12px + .8vw);
+  margin: 0 0 0 6px;
+  text-overflow: ellipsis;
 }
 
 .Place-Text {
-  font-size: 32px;
+  font-size: calc(16px + .8vw);
   padding: 4px;
 }
 
 .Place-Superscript {
   vertical-align: super;
-  font-size: 18px;
+  font-size: calc(8px + .8vw);
 }
 
 .League-Team-Container {
@@ -63,7 +63,7 @@ p {
   align-items: center;
   background-color: white;
   border-radius: 4px;
-  padding: 6px;
+  padding: 4px;
 }
 
 .League-Team-Container-Hover:hover {
@@ -73,12 +73,12 @@ p {
 }
 
 .Wager-Text {
-  font-size: 16px;
+  font-size: calc(7px + .8vw);
   padding: 2px;
 }
 
 .Wager-Container {
-  padding: 8px;
+  padding: 4px;
   background: #dcdcdc;
   border-radius: 4px;
   float: right;
@@ -164,4 +164,17 @@ h4 {
 
 tr.User-Favorite {
   background-color: #add8e6;
+}
+
+.ML-Container h3 {
+  margin-left: 18px;
+  font-size: calc(10px + 1vw);
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 100%;
 }

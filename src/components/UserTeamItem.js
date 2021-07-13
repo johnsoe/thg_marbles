@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PlaceView from './PlaceView'
 import ReactModal from 'react-modal';
 import { GrClose } from "react-icons/gr";
-import { customStyles } from '../util/ModalUtil';
+import { getCustomStyles } from '../util/ModalUtil';
 import UserTeamPerformance from './UserTeamPerformance';
 
 const UserTeamItem = (props) => {
@@ -28,19 +28,15 @@ const UserTeamItem = (props) => {
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
-        style={customStyles}>
+        style={getCustomStyles()}>
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
-
         <div className="League-Team-Container">
           <p className="Team-Text">{props.team.name}</p>
           <PlaceView total={props.team.total} place={props.place}/>
         </div>
-
-        <div className="User-Team-Details">
-          <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>
-          <UserTeamPerformance events={props.team.results} />
-        </div>
+        <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>
+        <UserTeamPerformance events={props.team.results} />
       </ReactModal>
     </div>
   )

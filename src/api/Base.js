@@ -14,6 +14,7 @@ class BaseApi {
   }
 
   static getCurrentUserId(auth) {
+    if (!auth) return "";
     return auth['attributes']['sub'];
   }
 

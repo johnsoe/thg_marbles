@@ -3,6 +3,7 @@ import BaseApi from '../api/Base';
 const LeagueTable = (props) => {
 
   var userTeam = BaseApi.getUserIdInUserTeamList(props.userTeams, props.auth);
+  var userId = (userTeam ? userTeam.id : -1);
 
   return (
     <div>
@@ -23,7 +24,7 @@ const LeagueTable = (props) => {
           { props.mLTeams &&
             props.mLTeams.map(teamItem => {
               const points = teamItem.points ? teamItem.points : 0;
-              const userFav = teamItem.name === userTeam.favorite_ml_team;
+              const userFav = teamItem.name === ( userTeam ? userTeam.favorite_ml_team : -1);
               return (<tr className={userFav ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
@@ -38,13 +39,13 @@ const LeagueTable = (props) => {
         </tbody>
         <thead>
           <tr>
-            <th colSpan="18">One of Us</th>
+            <th colSpan="18">All of Us</th>
           </tr>
         </thead>
         <tbody>
           { props.userTeams &&
             props.userTeams.map(teamItem =>
-              <tr className={teamItem.id === userTeam.id ? "User-Favorite" : undefined}>
+              <tr className={teamItem.id === userId ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
                   teamItem.results.map(item =>

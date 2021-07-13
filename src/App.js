@@ -152,7 +152,7 @@ class App extends React.Component {
               }
           </div>
           <div>
-            { userTeams && 
+            { userTeams &&
               <LeagueTable
                 events={allEvents}
                 mLTeams={marbleTeams}

@@ -36,6 +36,7 @@ const UserLeague = (props) => {
         </ul>
       }
       <ul>
+        <h3>Our Standings</h3>
         {
           props.userTeams
             .sort((a, b) => b.total - a.total)

@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 import BaseApi from '../api/Base';
 import axios from 'axios'
 import { GrClose } from "react-icons/gr"
-import { customStyles } from '../util/ModalUtil';
+import { getCustomStyles } from '../util/ModalUtil';
 
 const WagerAlert = (props) => {
 
@@ -66,10 +66,10 @@ const WagerAlert = (props) => {
         'Authorization': BaseApi.getAuthToken(props.auth)
       }
     })
-    .then(res => {
+    .then( data => {
+      console.log("WAGER: " + JSON.stringify(data));
       closeModal();
       props.onWagerMade();
-      setSubmittedVote(res.data.body);
     })
     .catch(err => {
       console.log("ERROR: " + err);
@@ -105,7 +105,7 @@ const WagerAlert = (props) => {
         ariaHideApp={false}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
-        style={customStyles}
+        style={getCustomStyles()}
       >
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <h3>Upcoming Event: {props.mLEvent.name}</h3>
