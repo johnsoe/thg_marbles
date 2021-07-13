@@ -67,7 +67,7 @@ const WagerAlert = (props) => {
       }
     })
     .then( data => {
-      console.log("WAGER: " + JSON.stringify(data));
+      setSubmittedVote(userVote);
       closeModal();
       props.onWagerMade();
     })
@@ -91,15 +91,19 @@ const WagerAlert = (props) => {
   }
 
   return (
-    <div className="Wager-Container">
-      <p className="Wager-Text">
+    <div className="Wager-Container pure-u-1 pure-u-md-1-2">
+      <div className="Wager-CTA pure-u-1-2">
+        <h3>Upcoming Event:</h3>
+        <p className="Wager-Text">{props.mLEvent.name}</p>
+      </div>
+      <div className="Wager-CTA pure-u-1-2">
         { submittedVote ? (
-          <p>You have already voted for {props.mLEvent.name}, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
+          <p className="Wager-Text">You have already voted, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
         ) : (
-          <p>Upcoming event: {props.mLEvent.name}. Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
+          <p className="Wager-Text">Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
         )}
-      </p>
-      <button onClick={openModal}>Vote</button>
+        <button onClick={openModal}>Vote</button>
+      </div>
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}
@@ -114,10 +118,10 @@ const WagerAlert = (props) => {
           value={userVote}
           onChange={(e) => handleTeamSelectChange(e)}
         >
-          <option value=""></option>
+          <option value="" key="empty"></option>
           { availableTeams &&
             availableTeams.map(item =>
-              <option value={item}>{item}</option>
+              <option value={item} key={item}>{item}</option>
             )
           }
         </select>

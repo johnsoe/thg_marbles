@@ -6,7 +6,7 @@ const LeagueTable = (props) => {
   var userId = (userTeam ? userTeam.id : -1);
 
   return (
-    <div>
+    <div className="Table-Contiainer">
       <h2>Full Results</h2>
       <table className="pure-table pure-table-horizontal">
         <thead>

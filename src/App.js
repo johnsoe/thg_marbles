@@ -6,6 +6,7 @@ import TeamCreateView from './components/TeamCreateView'
 import LeagueTable from './components/LeagueTable'
 import UserLeague from './components/UserLeague'
 import UserView from './components/UserView'
+import WagerAlert from './components/WagerAlert'
 import BaseApi from './api/Base'
 
 import Amplify, { Auth, Hub } from 'aws-amplify';
@@ -111,12 +112,20 @@ class App extends React.Component {
     );
   }
 
+  getUpcomingEvents(allEvents) {
+    const now = Date.now();
+    return allEvents && allEvents.filter(item => {
+        return now / 1000 <= item.expiry;
+    });
+  }
+
   render() {
     const userTeams = this.getFilteredUserTeamList();
     const marbleTeams = this.getFilteredMarbleTeamList();
     const allEvents = this.getFilteredEvents();
     const allWagers = this.getAllWagers();
     const userWagers = this.getUserSpecificWagers();
+    const upcomingEvents = this.getUpcomingEvents(allEvents);
     return (
       <div className="App-Header">
         <UserView
@@ -133,6 +142,22 @@ class App extends React.Component {
             />
           </AlertProvider>
         }
+        { upcomingEvents && upcomingEvents.length > 0 && this.state.user && BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) &&
+          <ul>
+            {
+              upcomingEvents.map(item =>
+                <li key={item.name}>
+                  <WagerAlert
+                    mLEvent={item}
+                    auth={this.state.user}
+                    onWagerMade={this.queryForLeagueData.bind(this)}
+                    wagers={userWagers}
+                  />
+                </li>
+              )
+            }
+          </ul>
+        }
         <div className="League-Views">
           <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
             { marbleTeams &&
@@ -147,7 +172,6 @@ class App extends React.Component {
                   mLTeams={marbleTeams}
                   events={allEvents}
                   wagers={userWagers}
-                  onWagerMade={this.queryForLeagueData.bind(this)}
                 />
               }
           </div>

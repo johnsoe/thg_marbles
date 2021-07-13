@@ -15,12 +15,6 @@
   }
 }
 
-.Top-ML-Container {
-  min-height: 100vh;
-  font-size: calc(10px + 2vmin);
-  margin-top: 8px;
-}
-
 .App-Header {
   background-color: #f4f4f4;
   padding: 8px;
@@ -61,4 +55,5 @@ button:hover {
 
 ul {
   padding: 0px;
+  margin: 0px;
 }

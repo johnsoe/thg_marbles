@@ -15,17 +15,15 @@ ul {
   background-color: white;
   border-radius: 8px;
   padding: 4px;
-  margin-right: 4px;
+  margin-right: 2px;
 }
 
 .UL-Container {
-  margin-right: 0px;
-  margin-left: 4px;
+  margin-left: 2px;
 }
 
 li {
   overflow: hidden;
-  margin: 6px;
 }
 
 p {
@@ -73,19 +71,40 @@ div {
 }
 
 .Wager-Text {
-  font-size: calc(7px + .8vw);
-  padding: 2px;
+  font-size: calc(6px + .8vw);
+  padding: 4px;
 }
 
 .Wager-Container {
-  padding: 4px;
-  background: #dcdcdc;
-  border-radius: 4px;
-  float: right;
+  display: table;
+  border-spacing: 6px;
+}
+
+.Wager-CTA {
+  background: #add8e6;
+  border-radius: 8px;
+  display: table-cell;
+  padding: 12px 6px 6px 6px;
+}
+
+.Top-ML-Container {
+  font-size: calc(10px + 2vmin);
+  margin-bottom: 12px;
+}
+
+.Wager-Container p {
+  text-align: center;
 }
 
 .Wager-Container button {
-  float: right;
+  margin: 8px auto 8px auto;
+}
+
+.Wager-Container h3 {
+  margin: 0 0 12px 0;
+  padding: 4px;
+  text-align: center;
+  font-size: calc(8px + .8vw);
 }
 
 .Place-Container {
@@ -167,7 +186,7 @@ tr.User-Favorite {
 }
 
 .ML-Container h3 {
-  margin-left: 18px;
+  margin-left: 14px;
   font-size: calc(10px + 1vw);
 }
 
@@ -177,4 +196,25 @@ textarea {
     box-sizing: border-box;
 
     width: 100%;
+}
+
+table {
+  display: block;
+  overflow: auto;
+}
+
+th {
+  text-align: center;
+}
+
+th:first-child {
+  text-align: left;
+}
+
+td {
+  text-align: center;
+}
+
+td:first-child {
+  text-align: left;
 }
