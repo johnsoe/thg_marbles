@@ -20,7 +20,12 @@ const TeamCreateView = (props) => {
 
   function postTeamCreate(auth) {
     if (!teamName || !selectedTeam) {
-      console.log("You need to enter shit");
+      alert.info("Please enter a valid team name and valid favorite team.");
+      return;
+    }
+
+    if (teamName.length > 69) {
+      alert.info("Please keep your team name length below 69 characters");
       return;
     }
     axios.post(BaseApi.getBaseUrl(), {
@@ -87,7 +92,7 @@ const TeamCreateView = (props) => {
         <span className="Icon-Container" onClick={closeModal}><GrClose/></span>
         <h3>Join the League!</h3>
         <p>Your team name</p>
-        <input type="text" name="name" onChange={(e) => handleTeamNameChange(e)} />
+        <input type="text" name="name" value={teamName} onChange={(e) => handleTeamNameChange(e)} />
         <p>Please select one team to be your favorite. Every time your favorite team places top 3, you earn a raffle ticket. At the end of the league, we will draw raffle tickets for prizes.</p>
         <select
           value={selectedTeam}
