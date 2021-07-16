@@ -1,6 +1,5 @@
 const UserTeamPerformance = (props) => {
   const validEvents = filterValidEvents(props.events);
-  console.log("ValidEvents: " + validEvents);
   return(
     <div>
       { validEvents && validEvents.length > 0 &&

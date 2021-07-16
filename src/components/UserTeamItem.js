@@ -20,7 +20,7 @@ const UserTeamItem = (props) => {
   return(
     <div>
       <div className="League-Team-Container League-Team-Container-Hover" onClick={openModal}>
-        <p className="Team-Text">{props.team.name}</p>
+        <p className="Team-Text pure-u-2-3">{props.team.name}</p>
         <PlaceView total={props.team.total} place={props.place}/>
       </div>
       <ReactModal
@@ -32,7 +32,7 @@ const UserTeamItem = (props) => {
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <div className="League-Team-Container">
-          <p className="Team-Text">{props.team.name}</p>
+          <p className="Team-Text pure-u-2-3">{props.team.name}</p>
           <PlaceView total={props.team.total} place={props.place}/>
         </div>
         <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>

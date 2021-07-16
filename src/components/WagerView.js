@@ -1,9 +1,10 @@
 
-const WagerView = (props) => {
+const EventWagerView = (props) => {
+
   return (
     <div>
     </div>
   )
 }
 
-export default WagerView;
+export default EventWagerView;

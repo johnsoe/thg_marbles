@@ -15,12 +15,12 @@ const PlaceView = (props) => {
   }
 
   return (
-    <div className="Place-Container Team-Text-Container">
-      <p className={"Place-Text" + getPlaceStyle()}>
+    <div className="Place-Container">
+      <p className={"pure-u-1-3 Place-Text" + getPlaceStyle()}>
         <span>{props.place}</span>
         <span className="Place-Superscript">{NumberFormat.numberPlaceFormat(props.place)}</span>
       </p>
-      <p className="Team-Text">{props.total} Points</p>
+      <p className="Team-Text pure-u-1-3">{props.total}</p>
     </div>
   )
 }

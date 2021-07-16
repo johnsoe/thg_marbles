@@ -4,6 +4,7 @@ import BaseApi from '../api/Base';
 import axios from 'axios'
 import { GrClose } from "react-icons/gr"
 import { getCustomStyles } from '../util/ModalUtil';
+import EventWagerView from './WagerView';
 
 const WagerAlert = (props) => {
 

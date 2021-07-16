@@ -61,7 +61,7 @@ div {
   align-items: center;
   background-color: white;
   border-radius: 4px;
-  padding: 4px;
+  padding: 8px;
 }
 
 .League-Team-Container-Hover:hover {
@@ -110,6 +110,10 @@ div {
   justify-content: flex-end;
   align-items: center;
   flex: 1;
+}
+
+.Place-Container p {
+  text-align: center;
 }
 
 .Place-Gold {
