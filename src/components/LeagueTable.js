@@ -23,14 +23,14 @@ const LeagueTable = (props) => {
         <tbody>
           { props.mLTeams &&
             props.mLTeams.map(teamItem => {
-              const points = teamItem.points ? teamItem.points : 0;
               const userFav = teamItem.name === ( userTeam ? userTeam.favorite_ml_team : -1);
               return (<tr className={userFav ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
-                  teamItem.events.map(item =>
-                    <td className={"points-" + points}>{points}</td>
-                  )
+                  teamItem.events.map(item => {
+                    const points = item.points ? item.points : 0;
+                    return <td className={"points-" + points}>{points}</td>
+                  })
                 }
                 <td>{teamItem.total}</td>
               </tr>)

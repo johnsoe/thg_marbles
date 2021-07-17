@@ -37,6 +37,13 @@ const WagerAlert = (props) => {
     }
   }
 
+  function getAllWagersOnEvent() {
+    const eventId = props.mLEvent.id;
+    if (props.allWagers) {
+      return props.allWagers.filter(item => item.eventId === eventId);
+    }
+  }
+
   function getAvailableTeams() {
     axios.post(BaseApi.getBaseUrl() + "/Teams",{
       "eventId": props.mLEvent.id
@@ -46,13 +53,11 @@ const WagerAlert = (props) => {
         'Authorization': BaseApi.getAuthToken(props.auth)
       }
     })
-    .then( res => {
-      console.log("AvailableTeams: " + JSON.stringify(res));
-      console.log("Teams Body: " + res.data.body);
+    .then(res => {
       setAvailableTeams(res.data.body);
     })
     .catch(err => {
-      console.log("ERROR: " + err);
+      console.log("AVAILABILITY ERROR: " + err);
     })
   }
 
@@ -121,14 +126,20 @@ const WagerAlert = (props) => {
         >
           <option value="" key="empty"></option>
           { availableTeams &&
-            availableTeams.map(item =>
-              <option value={item} key={item}>{item}</option>
-            )
+            Object.entries(availableTeams)
+              .map(([key, value]) => {
+                if (value > 0) {
+                  return <option value={key} key={key}>{key + " (" + value + ")"}</option>
+                } else {
+                  return null;
+                }
+              })
           }
         </select>
         <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
         <p className='Secondary-Wager-Title'>{props.mLEvent.secondary_wager}</p>
         <input type="text" name="secondary" value={userSecondaryVote} onChange={(e) => handleSecondaryBoxChanges(e)} />
+        <EventWagerView eventWagers={getAllWagersOnEvent()} userTeams={props.userTeams} />
         <button onClick={() => makeWager()}>Submit</button>
       </ReactModal>
     </div>

@@ -13,7 +13,7 @@ const UserTeamPerformance = (props) => {
             }
           </div>
           <div className='pure-u-1-4 Performance-Col'>
-            <h4>Points Earned</h4>
+            <h4>Primary</h4>
             {
               validEvents.map(item =>
                 <p>{item.primary}</p>
@@ -21,7 +21,7 @@ const UserTeamPerformance = (props) => {
             }
           </div>
           <div className='pure-u-1-4 Performance-Col'>
-            <h4>Secondary Points</h4>
+            <h4>Secondary</h4>
             {
               validEvents.map(item =>
                 <p>{item.secondary}</p>

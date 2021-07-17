@@ -5,7 +5,7 @@ const MarbleTeamPerformance = (props) => {
     <div>
       { validEvents && validEvents.length > 0 &&
         <div className='pure-g'>
-          <div className='pure-u-1-6 Performance-Col'>
+          <div className='pure-u-2-5 Performance-Col'>
             <h4>Event</h4>
             {
               validEvents.map(item =>
@@ -13,7 +13,7 @@ const MarbleTeamPerformance = (props) => {
               )
             }
           </div>
-          <div className='pure-u-1-6 Performance-Col'>
+          <div className='pure-u-2-5 Performance-Col'>
             <h4>Points Earned</h4>
             {
               validEvents.map(item =>
@@ -28,7 +28,7 @@ const MarbleTeamPerformance = (props) => {
 }
 
 function filterValidEvents(events) {
-  return events.filter(item => item.name && item.points);
+  return events.filter(item => item.name);
 }
 
 export default MarbleTeamPerformance;
