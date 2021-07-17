@@ -233,5 +233,6 @@ td:first-child {
 }
 
 .Fav-Text {
-  padding: 8px;
+  margin: 0 0 0 14px;
+  font-size: calc(9px + .8vw);
 }
