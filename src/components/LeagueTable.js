@@ -14,7 +14,7 @@ const LeagueTable = (props) => {
             <th>Marble Team</th>
             {
               Array.from(Array(16), (e, i) => {
-                return <th>{i + 1}</th>;
+                return <th key={'table-header-' + (i + 1)}>{i + 1}</th>;
               })
             }
             <th>Total</th>
@@ -24,12 +24,12 @@ const LeagueTable = (props) => {
           { props.mLTeams &&
             props.mLTeams.map(teamItem => {
               const userFav = teamItem.name === ( userTeam ? userTeam.favorite_ml_team : -1);
-              return (<tr className={userFav ? "User-Favorite" : undefined}>
+              return (<tr key={teamItem.name} className={userFav ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
-                  teamItem.events.map(item => {
+                  teamItem.events.map((item, i) => {
                     const points = item.points ? item.points : 0;
-                    return <td className={"points-" + points}>{points}</td>
+                    return <td key={teamItem.name + "-" + i} className={"points-" + points}>{points}</td>
                   })
                 }
                 <td>{teamItem.total}</td>
@@ -45,11 +45,11 @@ const LeagueTable = (props) => {
         <tbody>
           { props.userTeams &&
             props.userTeams.map(teamItem =>
-              <tr className={teamItem.id === userId ? "User-Favorite" : undefined}>
+              <tr key={teamItem.name} className={teamItem.id === userId ? "User-Favorite" : undefined}>
                 <td>{teamItem.name}</td>
                 {
-                  teamItem.results.map(item =>
-                    <td>{item.primary + item.secondary ? item.primary + item.secondary : 0}</td>
+                  teamItem.results.map((item, i) =>
+                    <td key={teamItem.name + "-" + i}>{item.primary + item.secondary ? item.primary + item.secondary : 0}</td>
                   )
                 }
                 <td>{teamItem.total}</td>

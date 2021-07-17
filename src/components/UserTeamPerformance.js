@@ -8,7 +8,7 @@ const UserTeamPerformance = (props) => {
             <h4>Event</h4>
             {
               validEvents.map(item =>
-                <p>{item.name}</p>
+                <p key={item.name}>{item.name}</p>
               )
             }
           </div>
@@ -16,7 +16,7 @@ const UserTeamPerformance = (props) => {
             <h4>Primary</h4>
             {
               validEvents.map(item =>
-                <p>{item.primary}</p>
+                <p key={item.name + '-primary'}>{item.primary}</p>
               )
             }
           </div>
@@ -24,7 +24,7 @@ const UserTeamPerformance = (props) => {
             <h4>Secondary</h4>
             {
               validEvents.map(item =>
-                <p>{item.secondary}</p>
+                <p key ={item.name + '-secondary'}>{item.secondary}</p>
               )
             }
           </div>

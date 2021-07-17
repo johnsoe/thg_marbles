@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import PlaceView from './PlaceView'
+import UserTeamHeader from './UserTeamHeader'
 import ReactModal from 'react-modal';
 import { GrClose } from "react-icons/gr";
 import { getCustomStyles } from '../util/ModalUtil';
@@ -19,10 +19,7 @@ const UserTeamItem = (props) => {
 
   return(
     <div>
-      <div className="League-Team-Container League-Team-Container-Hover" onClick={openModal}>
-        <p className="Team-Text pure-u-2-3">{props.team.name}</p>
-        <PlaceView total={props.team.total} place={props.place}/>
-      </div>
+      <UserTeamHeader team={props.team} place={props.place} onClickCallback={openModal}/>
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}
@@ -31,11 +28,8 @@ const UserTeamItem = (props) => {
         style={getCustomStyles()}>
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
-        <div className="League-Team-Container">
-          <p className="Team-Text pure-u-2-3">{props.team.name}</p>
-          <PlaceView total={props.team.total} place={props.place}/>
-        </div>
-        <p className="Team-Text">Favorite Team - {props.team.favorite_ml_team}</p>
+        <UserTeamHeader team={props.team} place={props.place}/>
+        <p className="Team-Text Fav-Text">Favorite Team - {props.team.favorite_ml_team}</p>
         <UserTeamPerformance events={props.team.results} />
       </ReactModal>
     </div>

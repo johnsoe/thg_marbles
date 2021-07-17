@@ -1,9 +1,4 @@
-
 import UserTeamItem from './UserTeamItem'
-import WagerAlert from './WagerAlert'
-import BaseApi from '../api/Base'
-
-import axios from 'axios';
 
 const UserLeague = (props) => {
 

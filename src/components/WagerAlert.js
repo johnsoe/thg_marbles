@@ -9,7 +9,6 @@ import EventWagerView from './WagerView';
 const WagerAlert = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const userId = BaseApi.getCurrentUserId(props.auth);
   const [userVote, setUserVote] = useState();
   const [submittedVote, setSubmittedVote] = useState();
   const [userSecondaryVote, setUserSecondaryVote] = useState();

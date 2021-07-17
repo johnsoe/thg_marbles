@@ -1,7 +1,6 @@
 
 import { useState } from 'react'
 import ReactModal from 'react-modal';
-import NumberFormat from '../util/NumberFormat';
 import MarbleLeagueHeader from './MarbleLeagueHeader';
 import MarbleTeamPerformance from './MarbleTeamPerformance';
 import { GrClose } from "react-icons/gr";
