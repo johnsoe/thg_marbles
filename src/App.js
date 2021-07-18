@@ -152,6 +152,8 @@ class App extends React.Component {
                     auth={this.state.user}
                     onWagerMade={this.queryForLeagueData.bind(this)}
                     wagers={userWagers}
+                    allWagers={allWagers}
+                    userTeams={userTeams}
                   />
                 </li>
               )

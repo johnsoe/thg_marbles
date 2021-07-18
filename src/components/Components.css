@@ -236,3 +236,15 @@ td:first-child {
   margin: 0 0 0 14px;
   font-size: calc(9px + .8vw);
 }
+
+.Alert-Text-Item {
+  margin: 1px 0 1px 0;
+}
+
+.Wager-View-Container {
+  margin-bottom: 12px;
+}
+
+.Wager-View-Container h3 {
+  margin: 12px 0 0 0;
+}
