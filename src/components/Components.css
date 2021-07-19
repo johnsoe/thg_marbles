@@ -77,20 +77,19 @@ div {
 }
 
 .Wager-Text {
-  font-size: calc(8px + .8vw);
+  font-size: calc(2 + 1.2vw);
   padding: 4px;
 }
 
 .Wager-Container {
-  display: table;
-  border-spacing: 6px;
-}
-
-.Wager-CTA {
   background: #add8e6;
   border-radius: 8px;
   display: table-cell;
-  padding: 12px 6px 6px 6px;
+}
+
+.Wager-List > div {
+  display: table;
+  border-spacing: 2px;
 }
 
 .Top-ML-Container {
@@ -103,11 +102,11 @@ div {
 }
 
 .Wager-Container button {
-  margin: 8px auto 8px auto;
+  margin: 3px auto 3px auto;
 }
 
 .Wager-Container h3 {
-  margin: 0 0 12px 0;
+  margin: 2px 0 0 0;
   padding: 4px;
 }
 
@@ -247,4 +246,9 @@ td:first-child {
 
 .Wager-View-Container h3 {
   margin: 12px 0 0 0;
+}
+
+.User-Container > button {
+  display: inline-block;
+  margin-right: 12px;
 }

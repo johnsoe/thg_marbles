@@ -2,8 +2,6 @@ import PlaceView from './PlaceView'
 
 const UserTeamHeader = (props) => {
 
-  console.log(props.team);
-
   return (
     <div className={"League-Team-Container" + (props.onClickCallback ? " League-Team-Container-Hover" : "")} onClick={props.onClickCallback}>
       <div className="Team-Text-Container pure-u-2-3">

@@ -29,8 +29,8 @@ const UserTeamItem = (props) => {
 
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <UserTeamHeader team={props.team} place={props.place}/>
-        <p className="Team-Subtext Fav-Text">Favorite Team - {props.team.favorite_ml_team}</p>
-        <p className="Team-Subtext Fav-Text">Raffle Tickets Earned - {props.team.raffles_earned}</p>
+        <p className="Team-Subtext Fav-Text">Favorite Team: {props.team.favorite_ml_team}</p>
+        <p className="Team-Subtext Fav-Text">Raffle Tickets Earned: {props.team.raffles_earned}</p>
         <UserTeamPerformance events={props.team.results} />
       </ReactModal>
     </div>

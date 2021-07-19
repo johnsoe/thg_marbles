@@ -6,11 +6,9 @@ const EventWagerView = (props) => {
   var userWagerMap = props.eventWagers &&
     props.eventWagers.reduce((map, obj) => (map[obj.userId] = obj, map), {})
 
-
-
   return (
     <div className='Wager-View-Container'>
-      { userWagerMap && userTeamMap &&
+      { userWagerMap && userTeamMap && props.userTeams && props.eventWagers && props.eventWagers.length > 0 &&
         <div>
           <h3>Current Wagers</h3>
           <div className='pure-g'>
@@ -20,33 +18,33 @@ const EventWagerView = (props) => {
           </div>
         </div>
       }{
-            props.userTeams.map(item => {
-              const userWager = userWagerMap[item.id];
-              if (userWager) {
-                return(
-                  <div className='pure-g'>
-                    <div className='pure-u-2-5 Alert-Text-Item'>
-                      {
-                        <span>{item.name}</span>
-                      }
-                    </div>
-                    <div className='pure-u-2-5 Alert-Text-Item'>
-                      {
-                        <span>{userWager.selectedTeam}</span>
-                      }
-                    </div>
-                    <div className='pure-u-1-5 Alert-Text-Item'>
-                      {
-                        <span>{userWager.secondary}</span>
-                      }
-                    </div>
-                  </div>
-                );
-              } else {
-                return(<div></div>);
-              }
-           })
-         }
+        props.userTeams.map(item => {
+          const userWager = userWagerMap[item.id];
+          if (userWager) {
+            return(
+              <div className='pure-g' key={'wager-' + item.id}>
+                <div className='pure-u-2-5 Alert-Text-Item'>
+                  {
+                    <span>{item.name}</span>
+                  }
+                </div>
+                <div className='pure-u-2-5 Alert-Text-Item'>
+                  {
+                    <span>{userWager.selectedTeam}</span>
+                  }
+                </div>
+                <div className='pure-u-1-5 Alert-Text-Item'>
+                  {
+                    <span>{userWager.secondary}</span>
+                  }
+                </div>
+              </div>
+            );
+          } else {
+            return(<div></div>);
+          }
+       })
+      }
     </div>
   )
 }

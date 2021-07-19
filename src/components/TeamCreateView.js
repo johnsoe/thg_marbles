@@ -40,7 +40,6 @@ const TeamCreateView = (props) => {
       }
     })
       .then( data => {
-        console.log("TEAM: " + JSON.stringify(data))
         closeModal();
         props.onTeamAdded();
       })
@@ -51,7 +50,6 @@ const TeamCreateView = (props) => {
 
   function handleChange(e) {
     var selection = e.target.value;
-    console.log("TEAM: " + selection);
     if (selection === "O'rangers" && orangerSubmitCheck === false) {
       alert.info("Are you sure you want to pick The O'rangers? It's not too late to pick a better team.");
       setOrangerSubmitCheck(true);

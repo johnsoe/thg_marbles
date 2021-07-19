@@ -115,8 +115,17 @@ class App extends React.Component {
   getUpcomingEvents(allEvents) {
     const now = Date.now();
     return allEvents && allEvents.filter(item => {
-        return now / 1000 <= item.expiry;
+      return now / 1000 <= item.expiry;
+    })
+    .sort((a, b) => {
+      return a.expiry - b.expiry
     });
+  }
+
+  getCompletedEvents(allEvents) {
+    return allEvents && allEvents.filter(item => {
+        return item.expiry === 0;
+    })
   }
 
   render() {
@@ -126,6 +135,7 @@ class App extends React.Component {
     const allWagers = this.getAllWagers();
     const userWagers = this.getUserSpecificWagers();
     const upcomingEvents = this.getUpcomingEvents(allEvents);
+    const completedEvents = this.getCompletedEvents(allEvents);
     return (
       <div className="App-Header">
         <UserView
@@ -143,10 +153,10 @@ class App extends React.Component {
           </AlertProvider>
         }
         { upcomingEvents && upcomingEvents.length > 0 && this.state.user && BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) &&
-          <ul>
+          <div className="pure-g Wager-List">
             {
               upcomingEvents.map(item =>
-                <li key={item.name}>
+                <div key={item.name} className="pure-u-1 pure-u-sm-1-2 pure-u-md-1-4">
                   <WagerAlert
                     mLEvent={item}
                     auth={this.state.user}
@@ -155,10 +165,10 @@ class App extends React.Component {
                     allWagers={allWagers}
                     userTeams={userTeams}
                   />
-                </li>
+                </div>
               )
             }
-          </ul>
+          </div>
         }
         <div className="League-Views">
           <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
@@ -185,6 +195,8 @@ class App extends React.Component {
                 userTeams={userTeams}
                 auth={this.state.user}/>
             }
+          </div>
+          <div>
           </div>
         </div>
       </div>
