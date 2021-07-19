@@ -77,37 +77,35 @@ div {
 }
 
 .Wager-Text {
-  font-size: calc(2 + 1.2vw);
-  padding: 4px;
+  font-size: calc(12px + .6vw);
+  font-weight: bold;
+}
+.Wager-Subtext {
+    font-size: calc(8px + .6vw);
+}
+
+.Wager-Text-Container {
+  flex: 1;
+  margin-right: 8px;
 }
 
 .Wager-Container {
   background: #add8e6;
   border-radius: 8px;
-  display: table-cell;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin: 2px;
 }
 
-.Wager-List > div {
-  display: table;
-  border-spacing: 2px;
+.Wager-Button {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .Top-ML-Container {
   font-size: calc(10px + 2vmin);
   margin-bottom: 12px;
-}
-
-.Wager-Container p {
-  text-align: center;
-}
-
-.Wager-Container button {
-  margin: 3px auto 3px auto;
-}
-
-.Wager-Container h3 {
-  margin: 2px 0 0 0;
-  padding: 4px;
 }
 
 .Place-Container {

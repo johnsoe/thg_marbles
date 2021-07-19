@@ -97,13 +97,17 @@ const WagerAlert = (props) => {
 
   return (
     <div className="Wager-Container">
-      <h3 className="Wager-Text">{props.mLEvent.name}</h3>
-      { submittedVote ? (
-        <p className="Wager-Text">You have already voted, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
-      ) : (
-        <p className="Wager-Text">Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
-      )}
-      <button onClick={openModal}>Vote</button>
+      <div className="Wager-Text-Container">
+        <p className="Wager-Text">{props.mLEvent.name}</p>
+        { submittedVote ? (
+          <p className="Wager-Subtext">You have already voted, but can update your vote until noon on {getDateTimeFromEpoch()}.</p>
+        ) : (
+          <p className="Wager-Subtext">Please cast your vote before noon on {getDateTimeFromEpoch()}.</p>
+        )}
+      </div>
+      <div className="Wager-Button">
+        <button onClick={openModal}>Vote</button>
+      </div>
       <ReactModal
         isOpen={isOpen}
         ariaHideApp={false}

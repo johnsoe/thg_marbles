@@ -156,7 +156,7 @@ class App extends React.Component {
           <div className="pure-g Wager-List">
             {
               upcomingEvents.map(item =>
-                <div key={item.name} className="pure-u-1 pure-u-sm-1-2 pure-u-md-1-4">
+                <div key={item.name} className="pure-u-1 pure-u-sm-1-3">
                   <WagerAlert
                     mLEvent={item}
                     auth={this.state.user}
