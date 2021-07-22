@@ -1,18 +1,20 @@
 import './App.css';
 
-import React from 'react'
-import MarbleLeague from './components/MarbleLeague'
-import TeamCreateView from './components/TeamCreateView'
-import LeagueTable from './components/LeagueTable'
-import UserLeague from './components/UserLeague'
-import UserView from './components/UserView'
-import WagerAlert from './components/WagerAlert'
-import BaseApi from './api/Base'
+import React from 'react';
+import MarbleLeague from './components/MarbleLeague';
+import TeamCreateView from './components/TeamCreateView';
+import LeagueTable from './components/LeagueTable';
+import UserLeague from './components/UserLeague';
+import UserView from './components/UserView';
+import WagerAlert from './components/WagerAlert';
+import BaseApi from './api/Base';
+import PastEvents from './components/PastEvents';
+import { getAllWagersOnEvent } from './util/EventUtil';
 
 import Amplify, { Auth, Hub } from 'aws-amplify';
 import awsConfig from './aws-exports';
-import { Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 import { alertOptions } from './util/ModalUtil';
 
 const isLocalhost = Boolean(
@@ -112,20 +114,15 @@ class App extends React.Component {
     );
   }
 
-  getUpcomingEvents(allEvents) {
+  getUpcomingEvents(allEvents, completed) {
     const now = Date.now();
     return allEvents && allEvents.filter(item => {
-      return now / 1000 <= item.expiry;
+      var active = now / 1000 <= item.expiry;
+      return completed ? !active : active;
     })
     .sort((a, b) => {
       return a.expiry - b.expiry
     });
-  }
-
-  getCompletedEvents(allEvents) {
-    return allEvents && allEvents.filter(item => {
-        return item.expiry === 0;
-    })
   }
 
   render() {
@@ -134,8 +131,8 @@ class App extends React.Component {
     const allEvents = this.getFilteredEvents();
     const allWagers = this.getAllWagers();
     const userWagers = this.getUserSpecificWagers();
-    const upcomingEvents = this.getUpcomingEvents(allEvents);
-    const completedEvents = this.getCompletedEvents(allEvents);
+    const upcomingEvents = this.getUpcomingEvents(allEvents, false);
+    const pastEvents = this.getUpcomingEvents(allEvents, true);
     return (
       <div className="App-Header">
         <UserView
@@ -162,7 +159,7 @@ class App extends React.Component {
                     auth={this.state.user}
                     onWagerMade={this.queryForLeagueData.bind(this)}
                     wagers={userWagers}
-                    allWagers={allWagers}
+                    allWagers={getAllWagersOnEvent(allWagers, item.id)}
                     userTeams={userTeams}
                   />
                 </div>
@@ -187,6 +184,15 @@ class App extends React.Component {
                 />
               }
           </div>
+          { pastEvents && this.state.league &&
+            <PastEvents
+              userTeams={userTeams}
+              mLTeams={marbleTeams}
+              wagers={userWagers}
+              events={pastEvents}
+              auth={this.state.user}
+            />
+          }
           <div>
             { userTeams &&
               <LeagueTable

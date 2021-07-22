@@ -250,3 +250,13 @@ td:first-child {
   display: inline-block;
   margin-right: 12px;
 }
+
+.Past-Event-Container {
+  margin: 2px;
+  display: flex;
+  flex-direction: row;
+}
+
+.Past-Event-Container .Team-Text-Container {
+  flex: 1;
+}

@@ -7,7 +7,7 @@ const LeagueTable = (props) => {
 
   return (
     <div className="Table-Contiainer">
-      <h2>Full Results</h2>
+      <h3>Full Results</h3>
       <table className="pure-table pure-table-horizontal">
         <thead>
           <tr>

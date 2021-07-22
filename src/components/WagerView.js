@@ -10,7 +10,12 @@ const EventWagerView = (props) => {
     <div className='Wager-View-Container'>
       { userWagerMap && userTeamMap && props.userTeams && props.eventWagers && props.eventWagers.length > 0 &&
         <div>
-          <h3>Current Wagers</h3>
+          { props.current ? (
+              <h3>Current Wagers</h3>
+          ) : (
+              <h3>All Wagers</h3>
+          )
+          }
           <div className='pure-g'>
             <h4 className='pure-u-2-5'>Team</h4>
             <h4 className='pure-u-2-5'>Primary</h4>
