@@ -13,7 +13,7 @@ const PastEvents = (props) => {
       <div className='pure-g'>
         {
           props.events.map(item => {
-            var userWagerOnEvent = props.wagers.find(wager => item.id === wager.eventId);
+            var userWagerOnEvent = props.wagers && props.wagers.find(wager => item.id === wager.eventId);
             return(
               <div key={item.name} className="pure-u-1 pure-u-sm-1-5">
                 <PastEvent
