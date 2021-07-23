@@ -4,6 +4,7 @@ import React from 'react';
 import MarbleLeague from './components/MarbleLeague';
 import TeamCreateView from './components/TeamCreateView';
 import LeagueTable from './components/LeagueTable';
+import LeagueChart from './components/LeagueChart';
 import UserLeague from './components/UserLeague';
 import UserView from './components/UserView';
 import WagerAlert from './components/WagerAlert';
@@ -125,6 +126,15 @@ class App extends React.Component {
     });
   }
 
+  getCompletedEvents(allEvents) {
+    return allEvents && allEvents.filter(item => {
+      return item.expiry === 0;
+    })
+    .sort((a, b) => {
+      return a.event_num - b.event_num;
+    });
+  }
+
   render() {
     const userTeams = this.getFilteredUserTeamList();
     const marbleTeams = this.getFilteredMarbleTeamList();
@@ -133,6 +143,7 @@ class App extends React.Component {
     const userWagers = this.getUserSpecificWagers();
     const upcomingEvents = this.getUpcomingEvents(allEvents, false);
     const pastEvents = this.getUpcomingEvents(allEvents, true);
+    const completedEvents = this.getCompletedEvents(allEvents);
     return (
       <div className="App-Header">
         <UserView
@@ -203,6 +214,12 @@ class App extends React.Component {
             }
           </div>
           <div>
+            { userTeams && marbleTeams && completedEvents &&
+              <LeagueChart
+                events={completedEvents}
+                mLTeams={marbleTeams}
+                userTeams={userTeams}/>
+            }
           </div>
         </div>
       </div>
