@@ -48,21 +48,19 @@ const LeagueChart = (props) => {
       .filter(item => item.name)
       .map(item => item.points);
 
-    var result = [];
-    pointsPerEvent.forEach((item, i) => {
-      result[i] = parseInt(item) + (i - 1 >= 0 ? result[i - 1] : 0);
-    });
-    result.unshift(0);
-    return result;
+    return cumulativeSumArray(pointsPerEvent);
   }
 
   function getSummedUserTeamData(team) {
     var pointsPerEvent = team.results
       .filter(item => item.name)
       .map(item => item.primary + item.secondary);
+    return cumulativeSumArray(pointsPerEvent);
+  }
 
+  function cumulativeSumArray(points) {
     var result = [];
-    pointsPerEvent.forEach((item, i) => {
+    points.forEach((item, i) => {
       result[i] = parseInt(item) + (i - 1 >= 0 ? result[i - 1] : 0);
     });
     result.unshift(0);
@@ -82,10 +80,18 @@ const LeagueChart = (props) => {
       plugins: {
         legend: {
           position: 'top',
+          labels: {
+            boxHeight: 0,
+            boxWidth: 20
+          }
         },
         title: {
           display: true,
-          text: titleText
+          text: titleText,
+          font: {
+            size: 22,
+            weight: 'bold'
+          }
         }
       }
     }
