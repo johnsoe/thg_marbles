@@ -35,7 +35,7 @@ const PastEvent = (props) => {
             <p className="Wager-Text">{props.event.name}</p>
           </div>
           { props.event.expiry === 0 ? (
-            <p className="Wager-Subtext" onClick={onLink}><a href={props.event.url}>Watch now</a></p>
+            <p className="Wager-Subtext"><a href={props.event.url} onClick={onLink}>Watch now</a></p>
           ) : (
             <p className="Wager-Subtext">Results Pending</p>
           )}
