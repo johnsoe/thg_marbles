@@ -46,7 +46,8 @@ const WagerAlert = (props) => {
       }
     })
     .then(res => {
-      setAvailableTeams(res.data.body);
+      setAvailableTeams(res.data.teams);
+      setUserSecondaryVote(res.data.secondary);
     })
     .catch(err => {
       console.log("AVAILABILITY ERROR: " + err);
