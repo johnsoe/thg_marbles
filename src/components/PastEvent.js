@@ -54,7 +54,11 @@ const PastEvent = (props) => {
         style={getCustomStyles()}
       >
         <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
-        <EventWagerView eventWagers={props.wagers} userTeams={props.userTeams} current={false}/>
+        <EventWagerView
+          eventWagers={props.wagers}
+          userTeams={props.userTeams}
+          current={false}
+          userId={props.userId}/>
       </ReactModal>
     </div>
   )

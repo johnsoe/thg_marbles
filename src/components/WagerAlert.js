@@ -14,6 +14,9 @@ const WagerAlert = (props) => {
   const [userSecondaryVote, setUserSecondaryVote] = useState();
   const [availableTeams, setAvailableTeams] = useState();
 
+  var userTeam = BaseApi.getUserIdInUserTeamList(props.userTeams, props.auth);
+  var userId = (userTeam ? userTeam.id : -1);
+
   useEffect(setWagerForEventId,[])
 
   function handleTeamSelectChange(e) {
@@ -131,7 +134,12 @@ const WagerAlert = (props) => {
         <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
         <p className='Secondary-Wager-Title'>{props.mLEvent.secondary_wager}</p>
         <input type="text" name="secondary" value={userSecondaryVote} onChange={(e) => handleSecondaryBoxChanges(e)} />
-        <EventWagerView eventWagers={props.allWagers} userTeams={props.userTeams} current={true}/>
+        <EventWagerView
+          eventWagers={props.allWagers}
+          userTeams={props.userTeams}
+          current={true}
+          userId={userId}
+          />
         <button onClick={() => makeWager()}>Submit</button>
       </ReactModal>
     </div>

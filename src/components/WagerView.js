@@ -26,8 +26,10 @@ const EventWagerView = (props) => {
         props.userTeams.map(item => {
           const userWager = userWagerMap[item.id];
           if (userWager) {
+            var isUserTeamWager = props.userId === userWager.userId;
+            console.log("TEAM: " + isUserTeamWager);
             return(
-              <div className='pure-g' key={'wager-' + item.id}>
+              <div className={'pure-g' + (isUserTeamWager ? " User-Favorite" : undefined)} key={'wager-' + item.id}>
                 <div className='pure-u-2-5 Alert-Text-Item'>
                   {
                     <span>{item.name}</span>
