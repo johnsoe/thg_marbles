@@ -122,7 +122,11 @@ class App extends React.Component {
       return completed ? !active : active;
     })
     .sort((a, b) => {
-      return a.expiry - b.expiry
+      var diff =  a.expiry - b.expiry;
+      if (diff !== 0) {
+        return diff;
+      }
+      return parseInt(a.event_num) - parseInt(b.event_num);
     });
   }
 
@@ -131,7 +135,7 @@ class App extends React.Component {
       return item.expiry === 0;
     })
     .sort((a, b) => {
-      return a.event_num - b.event_num;
+      return parseInt(a.event_num) - parseInt(b.event_num);
     });
   }
 
@@ -199,7 +203,7 @@ class App extends React.Component {
             <PastEvents
               userTeams={userTeams}
               mLTeams={marbleTeams}
-              wagers={userWagers}
+              wagers={allWagers}
               events={pastEvents}
               auth={this.state.user}
             />

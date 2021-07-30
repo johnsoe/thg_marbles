@@ -76,6 +76,12 @@ div {
   transition: .15s ease;
 }
 
+.Past-Event-Container:hover {
+  background-color: #dcdcdc;
+  cursor: default;
+  transition: .15s ease;
+}
+
 .Wager-Text {
   font-size: calc(12px + .6vw);
   font-weight: bold;
