@@ -23,11 +23,10 @@ const EventWagerView = (props) => {
           </div>
         </div>
       }{
-        props.userTeams.map(item => {
+        props.userTeams.map((item, index) => {
           const userWager = userWagerMap[item.id];
           if (userWager) {
             var isUserTeamWager = props.userId === userWager.userId;
-            console.log("TEAM: " + isUserTeamWager);
             return(
               <div className={'pure-g' + (isUserTeamWager ? " User-Favorite" : undefined)} key={'wager-' + item.id}>
                 <div className='pure-u-2-5 Alert-Text-Item'>
@@ -42,7 +41,11 @@ const EventWagerView = (props) => {
                 </div>
                 <div className='pure-u-1-5 Alert-Text-Item'>
                   {
-                    <span>{userWager.secondary}</span>
+                    <span>
+                      {
+                        userWager.secondary === "hidden" ? "[" + hiddenSynonyms[index % hiddenSynonyms.length] + "]"  : userWager.secondary
+                      }
+                    </span>
                   }
                 </div>
               </div>
@@ -55,5 +58,11 @@ const EventWagerView = (props) => {
     </div>
   )
 }
+
+const hiddenSynonyms = [
+  "Hidden", "Shrouded", "Redacted", "Vieled", "Indiscernable", "Unknown",
+  "Undisclosed", "Masked", "Withheld", "Concealed", "Cloaked", "Clouded",
+  "Invisible", "Buried"
+];
 
 export default EventWagerView;
