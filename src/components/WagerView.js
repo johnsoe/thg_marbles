@@ -60,7 +60,7 @@ const EventWagerView = (props) => {
 }
 
 const hiddenSynonyms = [
-  "Hidden", "Shrouded", "Redacted", "Vieled", "Indiscernable", "Unknown",
+  "Hidden", "Shrouded", "Redacted", "Veiled", "Indiscernable", "Unknown",
   "Undisclosed", "Masked", "Withheld", "Concealed", "Cloaked", "Clouded",
   "Invisible", "Buried"
 ];
