@@ -167,6 +167,16 @@ td.points-15 {
   transition: 0.15s ease;
 }
 
+.ReactModal__Content th {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.ReactModal__Content table {
+  margin-left: 11px;
+  margin-top: 20px;
+}
+
 .ReactModal__Content p {
   margin-top: 4px;
   margin-bottom: 8px;
@@ -186,11 +196,6 @@ td.points-15 {
 
 .ReactModal__Content {
   padding: 8px;
-}
-
-.Performance-Col {
-  padding: 4px 4px 4px 4px;
-  margin-left: 11px;
 }
 
 h4 {

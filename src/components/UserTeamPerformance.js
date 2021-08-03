@@ -3,32 +3,28 @@ const UserTeamPerformance = (props) => {
   return(
     <div>
       { validEvents && validEvents.length > 0 &&
-        <div className='pure-g'>
-          <div className='pure-u-1-4 Performance-Col'>
-            <h4>Event</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Primary</th>
+              <th>Secondary</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              validEvents.map(item =>
-                <p key={item.name}>{item.name}</p>
-              )
+              validEvents.map(item => {
+                return (
+                  <tr key={item.name}>
+                    <td>{item.name}</td>
+                    <td>{item.primary}</td>
+                    <td>{item.secondary}</td>
+                  </tr>
+                )
+              })
             }
-          </div>
-          <div className='pure-u-1-4 Performance-Col'>
-            <h4>Primary</h4>
-            {
-              validEvents.map(item =>
-                <p key={item.name + '-primary'}>{item.primary}</p>
-              )
-            }
-          </div>
-          <div className='pure-u-1-4 Performance-Col'>
-            <h4>Secondary</h4>
-            {
-              validEvents.map(item =>
-                <p key ={item.name + '-secondary'}>{item.secondary}</p>
-              )
-            }
-          </div>
-        </div>
+          </tbody>
+        </table>
       }
     </div>
   )

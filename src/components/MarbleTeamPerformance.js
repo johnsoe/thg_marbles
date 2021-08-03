@@ -4,24 +4,27 @@ const MarbleTeamPerformance = (props) => {
   return(
     <div>
       { validEvents && validEvents.length > 0 &&
-        <div className='pure-g'>
-          <div className='pure-u-2-5 Performance-Col'>
-            <h4>Event</h4>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Points Earned</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              validEvents.map(item =>
-                <p>{item.name}</p>
-              )
+              validEvents.map(item => {
+                return (
+                  <tr key={item.name}>
+                    <td>{item.name}</td>
+                    <td>{item.points}</td>
+                  </tr>
+                )
+              })
             }
-          </div>
-          <div className='pure-u-2-5 Performance-Col'>
-            <h4>Points Earned</h4>
-            {
-              validEvents.map(item =>
-                <p>{item.points}</p>
-              )
-            }
-          </div>
-        </div>
+          </tbody>
+        </table>
       }
     </div>
   )
