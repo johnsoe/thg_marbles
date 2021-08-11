@@ -112,35 +112,37 @@ const WagerAlert = (props) => {
         shouldCloseOnOverlayClick={true}
         style={getCustomStyles()}
       >
-        <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
-        <h3>Upcoming Event: {props.mLEvent.name}</h3>
-        <p>Select the team you believe will perform the best. You will earn the same number of points the selected team earns in this event.</p>
-        <select
-          value={userVote}
-          onChange={(e) => handleTeamSelectChange(e)}
-        >
-          <option value="" key="empty"></option>
-          { availableTeams &&
-            Object.entries(availableTeams)
-              .map(([key, value]) => {
-                if (value > 0) {
-                  return <option value={key} key={key}>{key + " (" + value + ")"}</option>
-                } else {
-                  return null;
-                }
-              })
-          }
-        </select>
-        <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
-        <p className='Secondary-Wager-Title'>{props.mLEvent.secondary_wager}</p>
-        <input type="text" name="secondary" value={userSecondaryVote} onChange={(e) => handleSecondaryBoxChanges(e)} />
-        <EventWagerView
-          eventWagers={props.allWagers}
-          userTeams={props.userTeams}
-          current={true}
-          userId={userId}
-          />
-        <button onClick={() => makeWager()}>Submit</button>
+        <div className="Scroll-Component">
+          <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
+          <h3>Upcoming Event: {props.mLEvent.name}</h3>
+          <p>Select the team you believe will perform the best. You will earn the same number of points the selected team earns in this event.</p>
+          <select
+            value={userVote}
+            onChange={(e) => handleTeamSelectChange(e)}
+          >
+            <option value="" key="empty"></option>
+            { availableTeams &&
+              Object.entries(availableTeams)
+                .map(([key, value]) => {
+                  if (value > 0) {
+                    return <option value={key} key={key}>{key + " (" + value + ")"}</option>
+                  } else {
+                    return null;
+                  }
+                })
+            }
+          </select>
+          <p>Below is the secondary wager. If you are closest or tied for closest to the correct answer, you will earn 5 points.</p>
+          <p className='Secondary-Wager-Title'>{props.mLEvent.secondary_wager}</p>
+          <input type="text" name="secondary" value={userSecondaryVote} onChange={(e) => handleSecondaryBoxChanges(e)} />
+          <EventWagerView
+            eventWagers={props.allWagers}
+            userTeams={props.userTeams}
+            current={true}
+            userId={userId}
+            />
+          <button onClick={() => makeWager()}>Submit</button>
+        </div>
       </ReactModal>
     </div>
   )
