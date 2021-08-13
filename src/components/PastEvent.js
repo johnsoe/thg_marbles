@@ -53,9 +53,9 @@ const PastEvent = (props) => {
         shouldCloseOnOverlayClick={true}
         style={getCustomStyles()}
       >
+        <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <h3>{props.event.name}</h3>
         <p><b>Secondary:</b> {props.event.secondary_wager}</p>
-        <span className='Icon-Container' onClick={closeModal}><GrClose/></span>
         <EventWagerView
           eventWagers={props.wagers}
           userTeams={props.userTeams}
