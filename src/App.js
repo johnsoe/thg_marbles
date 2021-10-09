@@ -18,38 +18,6 @@ import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import { alertOptions } from './util/ModalUtil';
 
-const isLocalhost = Boolean(
-  window.location.hostname === "localhost" ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === "[::1]" ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-    )
-);
-
-// Assuming you have two redirect URIs, and the first is for localhost and second is for production
-const [
-  localRedirectSignIn,
-  devRedirectSignIn,
-  productionRedirectSignIn
-] = awsConfig.oauth.redirectSignIn.split(",");
-const [
-  localRedirectSignOut,
-  devRedirectSignOut,
-  productionRedirectSignOut,
-] = awsConfig.oauth.redirectSignOut.split(",");
-
-const updatedAwsConfig = {
-  ...awsConfig,
-  oauth: {
-    ...awsConfig.oauth,
-    redirectSignIn: isLocalhost ? localRedirectSignIn : productionRedirectSignIn,
-    redirectSignOut: isLocalhost ? localRedirectSignOut : productionRedirectSignOut,
-  }
-}
-Amplify.configure(updatedAwsConfig);
-
 class App extends React.Component {
 
   constructor() {
@@ -59,33 +27,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.queryForLeagueData();
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        this.setState({ user: user });
-      })
-      .catch(() => console.log("Not signed in"));
-
-    Hub.listen("auth", ({ payload: { event, data } }) => {
-      switch (event) {
-        case "signOut":
-          this.setState({ user: null });
-          break;
-      }
-    });
   }
 
   queryForLeagueData() {
     BaseApi.queryForLeagueData(res => {
       this.setState({league : res.data.body});
     });
-  }
-
-  onSignOut() {
-    Auth.signOut();
-  }
-
-  onSignIn() {
-    Auth.federatedSignIn({provider: 'Google'});
   }
 
   getFilteredMarbleTeamList() {
@@ -150,38 +97,6 @@ class App extends React.Component {
     const completedEvents = this.getCompletedEvents(allEvents);
     return (
       <div className="App-Header">
-        <UserView
-          user={this.state.user}
-          onSignOut={this.onSignOut}
-          onSignIn={this.onSignIn}/>
-        { this.state.user && marbleTeams && userTeams && !BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) && userTeams.length < 16 &&
-          <AlertProvider template={AlertTemplate} {...alertOptions}>
-            <TeamCreateView
-              auth={this.state.user}
-              mLTeams={marbleTeams}
-              userTeams={userTeams}
-              onTeamAdded={this.queryForLeagueData.bind(this)}
-            />
-          </AlertProvider>
-        }
-        { upcomingEvents && upcomingEvents.length > 0 && this.state.user && BaseApi.isUserIdInUserTeamList(userTeams, this.state.user) &&
-          <div className="pure-g Wager-List">
-            {
-              upcomingEvents.map(item =>
-                <div key={item.name} className="pure-u-1 pure-u-sm-1-3">
-                  <WagerAlert
-                    mLEvent={item}
-                    auth={this.state.user}
-                    onWagerMade={this.queryForLeagueData.bind(this)}
-                    wagers={userWagers}
-                    allWagers={getAllWagersOnEvent(allWagers, item.id)}
-                    userTeams={userTeams}
-                  />
-                </div>
-              )
-            }
-          </div>
-        }
         <div className="League-Views">
           <div className="Top-ML-Container pure-u-1 pure-u-md-1-2">
             { marbleTeams &&
